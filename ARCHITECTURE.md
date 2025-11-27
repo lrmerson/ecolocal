@@ -9,8 +9,7 @@ projeto-apc/
 │
 ├── app.py                          # Aplicação Flask com endpoints REST
 │   ├── GET /api/coleta-pontos      # Listar todos os pontos
-│   ├── GET /api/coleta-pontos?tipos=...  # Filtrar por tipos
-│   └── GET /api/coleta-pontos/<id>     # Obter ponto específico
+│   └── GET /api/coleta-pontos?tipos=...  # Filtrar por tipos
 │
 ├── coleta_service.py               # Camada de Serviço (Lógica de Negócio)
 │   └── ler_pontos_por_tipo_lixo()  # Função principal de filtro
@@ -95,9 +94,6 @@ python app.py
 ```bash
 # Filtrar por tipos
 curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
-
-# Obter ponto específico
-curl "http://localhost:5000/api/coleta-pontos/001"
 
 # Listar todos (com paginação)
 curl "http://localhost:5000/api/coleta-pontos?limit=10&offset=0"

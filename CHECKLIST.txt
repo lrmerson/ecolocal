@@ -42,25 +42,13 @@ REQUISITOS FUNCIONAIS
 ENDPOINTS REST
 ==============
 
-[✓] GET /api/coleta-pontos?tipos=...
-    - Filtrar pontos por tipo(s)
+[✓] GET /api/coleta-pontos/tipos=...
+    - Filtrado por tipo(s)
     - Query parameter: tipos (obrigatório)
     - Retorna JSON com metadados
     - Status: 200 (ok), 400 (parâmetro inválido), 500 (erro)
 
-[✓] GET /api/coleta-pontos/<id>
-    - Obter ponto específico
-    - Path parameter: id
-    - Retorna dados do ponto
-    - Status: 200 (ok), 404 (não encontrado), 500 (erro)
-
 [✓] GET /api/coleta-pontos
-    - Listar todos os pontos
-    - Query parameters: limit, offset (opcionais)
-    - Suporta paginação
-    - Status: 200 (ok), 500 (erro)
-
-
 ARQUIVOS CRIADOS
 ================
 

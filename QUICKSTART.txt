@@ -51,9 +51,6 @@
     # Filtrar por tipo
     curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
 
-    # Obter ponto específico
-    curl "http://localhost:5000/api/coleta-pontos/001"
-
     # Listar todos (com limite)
     curl "http://localhost:5000/api/coleta-pontos?limit=10"
 
@@ -112,7 +109,6 @@
   │
   ├── app.py                      ← ⭐ Endpoints REST (Flask)
   │   ├── GET /api/coleta-pontos?tipos=...
-  │   ├── GET /api/coleta-pontos/<id>
   │   └── GET /api/coleta-pontos
   │
   ├── coleta_service.py           ← ⭐ Lógica de Negócio
@@ -175,23 +171,7 @@
          "pontos": [...]
        }
 
-  2️⃣  Obter Ponto Específico
-     GET /api/coleta-pontos/001
-     
-     Path params:
-       - id: ID do ponto (001-119)
-     
-     Resposta:
-       {
-         "id": "001",
-         "nome": "...",
-         "tipo_lixo": "...",
-         "latitude": -15.76,
-         "longitude": -47.93,
-         "endereco": "..."
-       }
-
-  3️⃣  Listar Todos
+  2️⃣  Listar Todos
      GET /api/coleta-pontos?limit=10&offset=0
      
      Query params:

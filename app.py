@@ -52,47 +52,6 @@ def get_coleta_pontos():
         return jsonify({'error': f'Erro ao processar requisição: {str(e)}'}), 500
 
 
-@app.route('/api/coleta-pontos/<ponto_id>', methods=['GET'])
-def get_coleta_ponto_por_id(ponto_id):
-    """
-    Endpoint REST GET para obter um ponto de coleta específico por ID.
-    
-    Path Parameters:
-        ponto_id: ID do ponto de coleta
-    
-    Returns:
-        JSON com dados do ponto de coleta
-        
-    Status Codes:
-        200: Sucesso
-        404: Ponto não encontrado
-        500: Erro interno do servidor
-    """
-    try:
-        # Buscar todos os pontos e encontrar pelo ID
-        with open('pontos-de-coleta.csv', newline='', encoding='utf-8') as arquivo:
-            import csv
-            leitor = csv.DictReader(arquivo, skipinitialspace=True)
-            for row in leitor:
-                if row['id'] == ponto_id:
-                    ponto = {
-                        'id': row['id'],
-                        'nome': row['nome'],
-                        'tipo_lixo': row['tipo_lixo'],
-                        'latitude': float(row['latitude']),
-                        'longitude': float(row['longitude']),
-                        'endereco': row['endereco']
-                    }
-                    return jsonify(ponto), 200
-        
-        return jsonify({'error': f'Ponto de coleta com ID {ponto_id} não encontrado'}), 404
-        
-    except FileNotFoundError:
-        return jsonify({'error': 'Arquivo CSV não encontrado'}), 500
-    except Exception as e:
-        return jsonify({'error': f'Erro ao processar requisição: {str(e)}'}), 500
-
-
 @app.route('/api/coleta-pontos', methods=['GET'])
 def list_coleta_pontos():
     """

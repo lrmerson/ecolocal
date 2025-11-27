@@ -83,34 +83,10 @@ def exemplo_3_multiplos_tipos():
 
 
 # ============================================================================
-# Exemplo 4: Obter Ponto Específico
+# Exemplo 4: Paginação
 # ============================================================================
 
-def exemplo_4_ponto_especifico():
-    """Obter dados de um ponto específico pelo ID."""
-    try:
-        import requests
-    except ImportError:
-        return
-    
-    # Obter ponto com ID 001
-    response = requests.get('http://localhost:5000/api/coleta-pontos/001')
-    
-    if response.status_code == 200:
-        ponto = response.json()
-        print(f"Nome: {ponto['nome']}")
-        print(f"ID: {ponto['id']}")
-        print(f"Endereço: {ponto['endereco']}")
-        print(f"Coordenadas: {ponto['latitude']}, {ponto['longitude']}")
-    elif response.status_code == 404:
-        print("Ponto não encontrado")
-
-
-# ============================================================================
-# Exemplo 5: Paginação
-# ============================================================================
-
-def exemplo_5_paginacao():
+def exemplo_4_paginacao():
     """Listar pontos com paginação."""
     try:
         import requests
@@ -133,10 +109,10 @@ def exemplo_5_paginacao():
 
 
 # ============================================================================
-# Exemplo 6: Tratamento de Erros
+# Exemplo 5: Tratamento de Erros
 # ============================================================================
 
-def exemplo_6_tratamento_erros():
+def exemplo_5_tratamento_erros():
     """Demonstrar tratamento de erros."""
     try:
         import requests
@@ -159,10 +135,10 @@ def exemplo_6_tratamento_erros():
 
 
 # ============================================================================
-# Exemplo 7: Aplicação com Geolocalização (usando Folium)
+# Exemplo 6: Aplicação com Geolocalização (usando Folium)
 # ============================================================================
 
-def exemplo_7_mapa():
+def exemplo_6_mapa():
     """Criar mapa com os pontos de coleta."""
     try:
         import folium
@@ -206,10 +182,10 @@ def exemplo_7_mapa():
 
 
 # ============================================================================
-# Exemplo 8: CLI Interativa
+# Exemplo 7: CLI Interativa
 # ============================================================================
 
-def exemplo_8_cli():
+def exemplo_7_cli():
     """Interface de linha de comando."""
     from coleta_service import ler_pontos_por_tipo_lixo
     
@@ -283,12 +259,11 @@ if __name__ == '__main__':
     print("1. Uso direto da função")
     print("2. Requests básico")
     print("3. Múltiplos tipos")
-    print("4. Ponto específico")
-    print("5. Paginação")
-    print("6. Tratamento de erros")
-    print("7. Mapa (requer folium)")
-    print("8. CLI Interativa")
-    print("9. Batch processing")
+    print("4. Paginação")
+    print("5. Tratamento de erros")
+    print("6. Mapa (requer folium)")
+    print("7. CLI Interativa")
+    print("8. Batch processing")
     
     escolha = input("\nDigite o número: ").strip()
     
@@ -296,12 +271,11 @@ if __name__ == '__main__':
         '1': exemplo_1_uso_direto,
         '2': exemplo_2_requests_basico,
         '3': exemplo_3_multiplos_tipos,
-        '4': exemplo_4_ponto_especifico,
-        '5': exemplo_5_paginacao,
-        '6': exemplo_6_tratamento_erros,
-        '7': exemplo_7_mapa,
-        '8': exemplo_8_cli,
-        '9': exemplo_9_batch,
+        '4': exemplo_4_paginacao,
+        '5': exemplo_5_tratamento_erros,
+        '6': exemplo_6_mapa,
+        '7': exemplo_7_cli,
+        '8': exemplo_8_batch,
     }
     
     if escolha in exemplos:

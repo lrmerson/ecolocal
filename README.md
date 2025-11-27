@@ -66,39 +66,7 @@ curl "http://localhost:5000/api/coleta-pontos?tipos=eletroeletronicos,pilhas"
 **Erros:**
 - `400 Bad Request`: Parâmetro `tipos` não fornecido
 
-### 2. Obter ponto específico por ID
-
-**Método:** `GET`  
-**URI:** `/api/coleta-pontos/<ponto_id>`
-
-**Descrição:**  
-Retorna os dados de um ponto de coleta específico.
-
-**Parâmetros de Caminho:**
-- `ponto_id`: ID do ponto (ex: 001, 015, 119)
-
-**Exemplo de Requisição:**
-```bash
-curl "http://localhost:5000/api/coleta-pontos/001"
-```
-
-**Resposta (200 OK):**
-```json
-{
-  "id": "001",
-  "nome": "Zero Impacto Logística Reversa",
-  "tipo_lixo": "eletroeletronicos\\,eletrodomesticos\\,pilhas",
-  "latitude": -15.762421707078582,
-  "longitude": -47.935475219000324,
-  "endereco": "Saa Q 2 SETOR DE ABASTECIMENTO..."
-}
-```
-
-**Erros:**
-- `404 Not Found`: Ponto com esse ID não encontrado
-- `500 Internal Server Error`: Erro ao processar requisição
-
-### 3. Listar todos os pontos de coleta
+### 2. Listar todos os pontos de coleta
 
 **Método:** `GET`  
 **URI:** `/api/coleta-pontos`
@@ -229,11 +197,6 @@ const tipos = 'eletroeletronicos,pilhas';
 fetch(`http://localhost:5000/api/coleta-pontos?tipos=${tipos}`)
   .then(res => res.json())
   .then(data => console.log(`${data.total} pontos encontrados`));
-
-// Obter ponto específico
-fetch('http://localhost:5000/api/coleta-pontos/001')
-  .then(res => res.json())
-  .then(ponto => console.log(ponto.nome));
 ```
 
 ## Notas

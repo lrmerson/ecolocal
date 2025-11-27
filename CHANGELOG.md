@@ -13,19 +13,14 @@
   - Docstring completa
 
 ### 2. **API REST com Flask** (`app.py`)
-Três endpoints implementados com padrão REST:
+Dois endpoints implementados com padrão REST:
 
 #### a) `GET /api/coleta-pontos?tipos=...`
 - Filtrar pontos por tipos de lixo
 - Retorna JSON com total e lista de pontos
 - Status codes: 200 (sucesso), 400 (parâmetro inválido), 500 (erro)
 
-#### b) `GET /api/coleta-pontos/<ponto_id>`
-- Obter ponto específico pelo ID
-- Retorna dados do ponto em JSON
-- Status codes: 200 (sucesso), 404 (não encontrado), 500 (erro)
-
-#### c) `GET /api/coleta-pontos`
+#### b) `GET /api/coleta-pontos`
 - Listar todos os pontos
 - Suporta paginação com `limit` e `offset`
 - Retorna JSON com total e lista completa
@@ -71,7 +66,6 @@ projeto-apc/
 
 1. **Resource-Based URIs**
    - `/api/coleta-pontos` (plural, noun-based)
-   - `/api/coleta-pontos/<id>` (specific resource)
 
 2. **HTTP Methods**
    - GET para leitura (idempotente, seguro)
@@ -118,9 +112,6 @@ python app.py
 ```bash
 # Filtrar por tipo
 curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
-
-# Obter ponto específico
-curl "http://localhost:5000/api/coleta-pontos/001"
 
 # Listar todos com paginação
 curl "http://localhost:5000/api/coleta-pontos?limit=10&offset=0"
