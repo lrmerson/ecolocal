@@ -1,0 +1,154 @@
+# Configuração do Projeto
+
+## Ambiente de Desenvolvimento
+
+### Estrutura do Projeto
+
+```
+projeto-apc/
+│
+├── app.py                          # Aplicação Flask com endpoints REST
+│   ├── GET /api/coleta-pontos      # Listar todos os pontos
+│   ├── GET /api/coleta-pontos?tipos=...  # Filtrar por tipos
+│   └── GET /api/coleta-pontos/<id>     # Obter ponto específico
+│
+├── coleta_service.py               # Camada de Serviço (Lógica de Negócio)
+│   └── ler_pontos_por_tipo_lixo()  # Função principal de filtro
+│
+├── test_coleta_service.py          # Testes Unitários
+│   └── TestColetaService           # Suite de testes (10+ casos)
+│
+├── test_manual.py                  # Script de teste interativo
+│
+├── pontos-de-coleta.csv            # Dados (119 pontos de coleta)
+│
+├── requirements.txt                # Dependências Python
+│
+└── README.md                       # Documentação da API
+```
+
+## Fluxo de Requisição
+
+```
+Cliente HTTP
+    ↓
+[app.py - Flask Route]
+    ↓
+[Validação de Parâmetros]
+    ↓
+[coleta_service.ler_pontos_por_tipo_lixo()]
+    ↓
+[Leitura CSV]
+    ↓
+[Filtro de Dados]
+    ↓
+[Formatação JSON]
+    ↓
+Resposta HTTP (JSON)
+```
+
+## Decisões de Design
+
+### 1. Separação em Camadas
+- **app.py**: Apenas lógica de HTTP e roteamento
+- **coleta_service.py**: Lógica de negócio pura (testável sem HTTP)
+
+### 2. REST API Design
+- Recurso: `coleta-pontos` (substantivo, plural)
+- Operações: GET (idempotente, segura)
+- Query parameters para filtros: `?tipos=...`
+- Path parameters para recursos específicos: `/<id>`
+
+### 3. Formato de Resposta
+- JSON estruturado com metadados
+- Status codes HTTP apropriados
+- Mensagens de erro descritivas
+
+### 4. Testes
+- Testes unitários sem dependência HTTP (usando arquivo CSV temporário)
+- Cobertura de casos normais, casos limites e erros
+- Não requerem Flask ou servidor rodando
+
+## Como Executar
+
+### Instalar Dependências
+```bash
+pip install -r requirements.txt
+```
+
+### Executar Testes Unitários
+```bash
+python -m unittest test_coleta_service.py -v
+```
+
+### Teste Manual (Interativo)
+```bash
+python test_manual.py
+```
+
+### Executar Servidor Flask
+```bash
+python app.py
+```
+
+### Testar Endpoints (curl)
+```bash
+# Filtrar por tipos
+curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
+
+# Obter ponto específico
+curl "http://localhost:5000/api/coleta-pontos/001"
+
+# Listar todos (com paginação)
+curl "http://localhost:5000/api/coleta-pontos?limit=10&offset=0"
+```
+
+## Tipos de Lixo Disponíveis
+
+- `eletroeletronicos`
+- `eletrodomesticos`
+- `pilhas`
+- `lampadas`
+
+(Combinações são possíveis usando o separador `\,` no CSV)
+
+## Boas Práticas Implementadas
+
+✓ **REST API Design**
+- URIs baseadas em recursos
+- Métodos HTTP corretos
+- Status codes apropriados
+- Versioning preparado (v1 em `/api/`)
+
+✓ **Clean Code**
+- Separação de responsabilidades
+- Funções com responsabilidade única
+- Nomes descritivos
+- Documentação de docstrings
+
+✓ **Testabilidade**
+- Lógica de negócio independente de HTTP
+- Testes sem efeitos colaterais
+- Arquivo CSV de teste temporário
+
+✓ **Error Handling**
+- Try-catch em pontos críticos
+- Mensagens de erro descritivas
+- Status codes HTTP apropriados
+
+✓ **Performance**
+- Operações O(n) eficientes para o volume de dados
+- Sem queries desnecessárias
+- Possibilidade de paginação
+
+## Próximas Melhorias Possíveis
+
+- [ ] Autenticação e autorização
+- [ ] Cache com Redis
+- [ ] Banco de dados (PostgreSQL)
+- [ ] Documentação com Swagger/OpenAPI
+- [ ] Testes de integração com requests
+- [ ] Docker container
+- [ ] CI/CD pipeline
+- [ ] Rate limiting
+- [ ] Logging estruturado

@@ -1,0 +1,284 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   REST API - GUIA RÁPIDO DE INÍCIO                          ║
+║                                                                            ║
+║                  Sistema de Pontos de Coleta - Distrito Federal            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📋 ÍNDICE
+─────────────────────────────────────────────────────────────────────────────
+
+  1. Instalação
+  2. Iniciar Servidor
+  3. Testar API
+  4. Estrutura do Projeto
+  5. Arquivos Principais
+  6. Próximos Passos
+
+
+1️⃣  INSTALAÇÃO
+─────────────────────────────────────────────────────────────────────────────
+
+  a) Instalar dependências:
+     
+     pip install -r requirements.txt
+
+  b) Verificar instalação:
+     
+     python -c "import flask; print(f'Flask {flask.__version__}')"
+
+
+2️⃣  INICIAR SERVIDOR
+─────────────────────────────────────────────────────────────────────────────
+
+  a) Iniciar Flask:
+     
+     python app.py
+
+     Esperado:
+     → Running on http://127.0.0.1:5000
+
+  b) Servidor estará disponível em:
+     
+     http://localhost:5000
+
+
+3️⃣  TESTAR API
+─────────────────────────────────────────────────────────────────────────────
+
+  OPÇÃO A: Com curl (linha de comando)
+  ─────────────────────────────────────
+
+    # Filtrar por tipo
+    curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
+
+    # Obter ponto específico
+    curl "http://localhost:5000/api/coleta-pontos/001"
+
+    # Listar todos (com limite)
+    curl "http://localhost:5000/api/coleta-pontos?limit=10"
+
+
+  OPÇÃO B: Com Python (requests)
+  ───────────────────────────────
+
+    import requests
+
+    # Filtrar
+    response = requests.get(
+        'http://localhost:5000/api/coleta-pontos',
+        params={'tipos': 'pilhas'}
+    )
+    print(response.json())
+
+
+  OPÇÃO C: Com Browser
+  ────────────────────
+
+    Abra no navegador:
+    http://localhost:5000/api/coleta-pontos?tipos=pilhas
+
+
+  OPÇÃO D: Teste Interativo (sem servidor)
+  ─────────────────────────────────────────
+
+    python test_manual.py
+
+
+4️⃣  EXECUTAR TESTES UNITÁRIOS
+─────────────────────────────────────────────────────────────────────────────
+
+  Rodar todos os testes:
+  
+    python -m unittest test_coleta_service.py -v
+
+  Esperado:
+    ✓ test_arquivo_nao_encontrado ... ok
+    ✓ test_case_insensitive ... ok
+    ✓ test_estrutura_dados_retornados ... ok
+    ✓ test_filtrar_com_None ... ok
+    ✓ test_filtrar_com_lista_vazia ... ok
+    ✓ test_filtrar_com_tipo_inexistente ... ok
+    ✓ test_filtrar_por_multiplos_tipos ... ok
+    ✓ test_filtrar_por_um_tipo ... ok
+    ✓ test_tipos_com_espacos ... ok
+    
+    OK - Ran 9 tests in 0.013s
+
+
+5️⃣  ESTRUTURA DO PROJETO
+─────────────────────────────────────────────────────────────────────────────
+
+  projeto-apc/
+  │
+  ├── app.py                      ← ⭐ Endpoints REST (Flask)
+  │   ├── GET /api/coleta-pontos?tipos=...
+  │   ├── GET /api/coleta-pontos/<id>
+  │   └── GET /api/coleta-pontos
+  │
+  ├── coleta_service.py           ← ⭐ Lógica de Negócio
+  │   └── ler_pontos_por_tipo_lixo()
+  │
+  ├── test_coleta_service.py      ← ⭐ Testes (9 testes ✓)
+  │
+  ├── test_manual.py              ← Teste interativo
+  ├── examples.py                 ← 9 exemplos de uso
+  │
+  ├── README.md                   ← 📖 Documentação completa
+  ├── ARCHITECTURE.md             ← 🏛️ Design & padrões
+  ├── CHANGELOG.md                ← 📝 Histórico de mudanças
+  ├── SUMMARY.md                  ← 📋 Sumário final
+  │
+  ├── pontos-de-coleta.csv        ← 📊 Dados (119 pontos)
+  ├── requirements.txt            ← 📦 Dependências
+  └── #Filtro de pontos.py        ← 📁 Original (legado)
+
+
+6️⃣  ARQUIVOS PRINCIPAIS
+─────────────────────────────────────────────────────────────────────────────
+
+  📄 README.md
+     → Como usar a API
+     → Descrição de endpoints
+     → Exemplos de requisição
+     → Tratamento de erros
+
+  📄 ARCHITECTURE.md
+     → Decisões de design
+     → Padrões REST implementados
+     → Fluxo de requisição
+     → Próximas melhorias
+
+  📄 examples.py
+     → 9 exemplos práticos
+     → Como integrar em seu código
+     → Diferentes formas de uso
+
+  📄 SUMMARY.md
+     → Este sumário executivo
+     → Estatísticas do projeto
+     → Checklist de requisitos
+
+
+7️⃣  ENDPOINTS REST
+─────────────────────────────────────────────────────────────────────────────
+
+  1️⃣  Filtrar por Tipo
+     GET /api/coleta-pontos?tipos=pilhas
+     
+     Query params:
+       - tipos (obrigatório): tipos separados por vírgula
+     
+     Resposta:
+       {
+         "total": 5,
+         "tipos_filtrados": ["pilhas"],
+         "pontos": [...]
+       }
+
+  2️⃣  Obter Ponto Específico
+     GET /api/coleta-pontos/001
+     
+     Path params:
+       - id: ID do ponto (001-119)
+     
+     Resposta:
+       {
+         "id": "001",
+         "nome": "...",
+         "tipo_lixo": "...",
+         "latitude": -15.76,
+         "longitude": -47.93,
+         "endereco": "..."
+       }
+
+  3️⃣  Listar Todos
+     GET /api/coleta-pontos?limit=10&offset=0
+     
+     Query params:
+       - limit (opcional): máximo de resultados
+       - offset (opcional): quantos pular
+     
+     Resposta:
+       {
+         "total": 119,
+         "pontos": [...]
+       }
+
+
+8️⃣  TESTES RÁPIDOS
+─────────────────────────────────────────────────────────────────────────────
+
+  Teste 1: Verificar se tudo está instalado
+  ───────────────────────────────────────────
+    python -c "from coleta_service import ler_pontos_por_tipo_lixo; print('OK')"
+
+  Teste 2: Executar testes unitários
+  ───────────────────────────────────
+    python -m unittest test_coleta_service.py -v
+
+  Teste 3: Testar função diretamente
+  ──────────────────────────────────
+    python -c "from coleta_service import ler_pontos_por_tipo_lixo; print(ler_pontos_por_tipo_lixo(['pilhas']))"
+
+  Teste 4: Interface interativa
+  ──────────────────────────────
+    python test_manual.py
+
+  Teste 5: Iniciar servidor e acessar
+  ────────────────────────────────────
+    python app.py
+    # Em outro terminal:
+    curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas"
+
+
+9️⃣  TIPOS DE LIXO DISPONÍVEIS
+─────────────────────────────────────────────────────────────────────────────
+
+  - eletroeletronicos
+  - eletrodomesticos
+  - pilhas
+  - lampadas
+
+  Exemplo:
+    ?tipos=pilhas                          # Um tipo
+    ?tipos=pilhas,eletroeletronicos       # Múltiplos (AND logic)
+
+
+🔟 TROUBLESHOOTING
+─────────────────────────────────────────────────────────────────────────────
+
+  ❌ "Flask not found"
+     → Instale: pip install -r requirements.txt
+
+  ❌ "Arquivo CSV não encontrado"
+     → Certifique-se de estar no diretório correto
+     → O arquivo "pontos-de-coleta.csv" deve estar presente
+
+  ❌ "Porta 5000 em uso"
+     → Mude a porta em app.py: app.run(port=5001)
+     → Ou feche o serviço usando porta 5000
+
+  ❌ "ModuleNotFoundError: No module named 'csv'"
+     → csv é built-in do Python, reinstale Python se necessário
+
+
+1️⃣1️⃣ PRÓXIMOS PASSOS
+─────────────────────────────────────────────────────────────────────────────
+
+  [ ] Ler README.md para detalhes dos endpoints
+  [ ] Executar testes: python -m unittest test_coleta_service.py -v
+  [ ] Testar API: python app.py
+  [ ] Explorar examples.py para diferentes formas de uso
+  [ ] Ler ARCHITECTURE.md para entender decisões de design
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  ✅ Tudo pronto para começar!                                             ║
+║                                                                            ║
+║  Dúvidas? Consulte:                                                        ║
+║  - README.md: documentação técnica                                         ║
+║  - ARCHITECTURE.md: decisões de design                                     ║
+║  - examples.py: exemplos práticos                                          ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
