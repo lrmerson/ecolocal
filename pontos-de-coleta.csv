@@ -1,0 +1,119 @@
+id,nome,tipo_lixo,latitude,longitude,endereco
+001,Zero Impacto Logística Reversa,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.762421707078582,-47.935475219000324,Saa Q 2 SETOR DE ABASTECIMENTO E ARMAZENAMENTO NORTE QUADRA 02 LOTE 805
+002,SEMA DF (Secretaria de Estado de Meio Ambiente e Recursos Hídricos do Distrito Federal),"eletroeletronicos\,eletrodomesticos\,pilhas",-15.755712652216836,-47.89334378817608,SEPN CRN 511 Ed. Bittar III - Bloco B
+003,Carrefour Hipermercado,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.733847664170918,-47.899207515917645,Boulevard Shopping ST Setor Terminal Norte Lote J
+004,DF Plaza Shopping,"eletroeletronicos\,eletrodomesticos",-15.831532013096274,-48.041291760541554,R. Copaíba lote 01 - Águas Claras
+005,Jarjour Asa Norte,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.76841785783375,-47.881690602871956,PAG SHCN Bloco A - Plano Piloto
+006,Jarjour Asa Sul,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.822779626350073,-47.90847802006243,SHCS SQ 210 Bloco A PAG SHCS - Asa Sul
+007,Posto Jarjour Taguatinga,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.840028813343814,-48.05057957588384,Setor B Sul Csb 8 Lotes 1/5 - Taguatinga
+008,Loja Vivo Lago Sul,eletroeletronicos,-15.845953325613518,-47.895737606568666,St. de Habitações Individuais Sul QI 5 Bloco H Loja 5 e 6 - Lago Sul
+009,Loja Vivo Ceilandia,eletroeletronicos,-15.818971489699189,-48.10731197403482,St. M QNM 01 Conjunto B Lote 01 - Ceilândia
+010,Loja Vivo Paranoa,eletroeletronicos,-15.76485235330142,-47.78027873170767,Av. Paranoá Conjunto 19 e 20 - Paranoá
+011,Loja Vivo Recanto das Emas,eletroeletronicos,-15.902164510329207,-48.06041177403253,Q 102 Quadra 205 Conjunto 04 - Recanto das Emas
+012,Loja Vivo Samambaia Norte,eletroeletronicos,-15.860285656506688,-48.073196077732725,Quadra Qs Samambaia Norte 6 - 412 Bloco F
+013,Loja Vivo Sobradinho,eletroeletronicos,-15.650190001288705,-47.78368940472464,Quadra 14 Área Especial 03 Lote 03/04 - Loja 02/04 - Sobradinho
+014,Loja Vivo Taguatinga,eletroeletronicos,-15.83581597353088,-48.05659295074723,Csb 2 Lotes 1/4 1º Piso - Loja PA44 Taguatinga Centro - Taguatinga
+015,Loja Vivo Boulevard Shopping,eletroeletronicos,-15.733427699839865,-47.899214067475974,Setor Terminal Norte Conjunto J N/A Loja 122 e 123 - Asa Norte
+016,Loja Vivo Brasilia Shopping,eletroeletronicos,-15.786294677234224,-47.888839348899104,Setor SCN Quadra 5 Bloco A Subsolo - Loja 40 C1 - Asa Norte
+017,Loja Vivo Conjunto Nacional,eletroeletronicos,-15.791119176287378,-47.88314475002032,SDN Conjunto A Quiosque 10 Loja S16 1º Subsolo - Asa Norte
+018,Loja Vivo DF Plaza,eletroeletronicos,-15.831591938303923,-48.04091113355535,Shopping Df Plaza - R. Copaíba 1 - Lote 01 - Loja 16 - Norte
+019,Loja Vivo Gama Shopping,eletroeletronicos,-16.01290602116271,-48.062720689372185,Quadra EQ 55 56 S/N Térreo - Loja C126/C127/C145/C146 St. Central - Gama
+020,Loja Vivo Iguatemi,eletroeletronicos,-15.720714407275333,-47.88577020287318,SHI/Norte Setor de Habitações Individuis Norte QD CA 04 Loja 71 - Térreo
+021,Loja Vivo JK Shopping,eletroeletronicos,-15.810004302597006,-48.0931735623915,St. M-Norte QNM 34 Quadra 3º piso - Loja 312 - Taguatinga
+022,Loja Vivo Park Shopping,eletroeletronicos,-15.833440949465338,-47.95507179122646,SAI / SO Área 6580 Loja 233 e 234 - Guará
+023,Loja Vivo Patio Brasil,eletroeletronicos,-15.794412938410051,-47.89328494704944,BL A - Setor Comercial Sul S/N Quadra 07 Loja 3P/P315 - Asa Sul
+024,Loja Vivo Santa Maria Shopping,eletroeletronicos,-16.005867100630272,-48.00073579122187,Quadra Cl 114 3º Piso - Loja 216 - Santa Maria
+025,Loja Vivo Aguas Claras Shopping,eletroeletronicos,-15.841768554495678,-48.024244598212036,Av. das Araucárias 2005 - Lotes 1835/1905/1955 - Loja 268 - 1º Piso - Sul
+026,Loja Vivo Felicitta Shopping,eletroeletronicos,-15.833678402557776,-48.03694457904123,Rua 36 S/N Térreo - Lote 5 - Bloco 2 Loja 17 A - Águas Claras
+027,Loja Vivo Taguatinga Shopping,eletroeletronicos,-15.841299255213285,-48.04396505984757,QS 01 Rua 210 40 Lote 40 - Salão Comercial 1060 1º Piso - Águas Claras
+028,Loja TIM Park Shopping,eletroeletronicos,-15.832982751619197,-47.95534785972121,Setor SMAS Área 6580 Quiosque NR 237 - Park Shopping Zona Industrial - Guará
+029,Loja TIM Conjunto Nacional,eletroeletronicos,-15.790622391709737,-47.88260757927798,Setor SDN Shopping Conjunto Nacional Conjunto A Loja T64 - Asa Norte
+030,Loja TIM Boulevard Shopping,eletroeletronicos,-15.733235369553006,-47.89868379380002,STN - Plano Piloto
+031,Loja TIM Patio Brasil,eletroeletronicos,-15.79630550214346,-47.892122085028234,SCS QD 07 BL A Piso 1 - Asa Sul
+032,Loja TIM Taguatinga Shopping,eletroeletronicos,-15.841095721396073,-48.043515478006675,QS 1 Quadra Edif Taguatinga Shopping Loja 1049 - Taguatinga
+033,Midea - Totaline,"eletroeletronicos\,eletrodomesticos",-15.8220186334775,-47.919229818480076,Av W3 SCRS QD 513 Bloco A Loja 24 /25 - Asa Sul
+034,Magazine Luiza Conjunto Nacional,"eletroeletronicos\,eletrodomesticos",-15.792176946602346,-47.88305321370058,Conjunto Nacional Brasilia S/N - Slj 136 - Parte C Sdn - Asa Norte
+035,210 Norte,eletroeletronicos,-15.756136453818197,-47.88421629318606,ST SHCN SQ 210 BLOCO A PAG 1 S/N - SEM COMPLEMENTO - ASA NORTE
+036,Posto BR 303 Sul,"eletroeletronicos\,pilhas",-15.805095355767232,-47.894264639710464,SHCS SQS 303 - Plano Piloto
+037,Posto Petrobras Paranoa,"eletroeletronicos\,pilhas",-15.760523103665568,-47.780932929102335,Q QUADRA 33 LOTE 02 PLL S/N - Paranoá
+038,Posto Petrobras Guara Park,"eletroeletronicos\,pilhas",-15.830585541222616,-47.973953885471786,Q QE 23 LOTE B - Guara II
+039,Posto Cascol SIA,"eletroeletronicos\,pilhas",-15.806428291333575,-47.96896420472036,SIA SETOR DE INDUSTRIA E ABASTECIMENTO A/E 56 PLL – BRASÍLIA
+040,Posto Ipiranga Ql 14,"eletroeletronicos\,pilhas",-15.84341354917843,-47.870909351655115,SHIGS 713 St. de Habitações Individuais Sul QI 15 BL A - Lago Sul
+041,CED São Francisco,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.914310936942885,-47.76316270771116,Quadra 17 100 - São Francisco
+042,Associação Recicle a Vida,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.809565600045222,-48.10045600959696,St. M QNM 28 - Ceilândia
+043,Poupex PTF CMP,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.777574743305486,-47.919485833556834,B ADM AP/CMP St. Militar Urbano - Plano Piloto
+044,Feira Sobradinho II,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.639720827011027,-47.82582451116585,AR 5 - Sobradinho II
+045,Condomínio Novo Horizonte,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.807858282479106,-47.943863298297934,Octogonal AOS 5 LOJA 67 BL A - Sudoeste/Octogonal
+046,CLDF Câmara Legislativa do Distrito Federal,"eletroeletronicos\,pilhas",-15.78687117096315,-47.91125701821399,St. de Industrias Graficas - Plano Piloto
+047,Shopping Deck Norte,"eletroeletronicos\,pilhas",-15.721020717545134,-47.88206694705145,SHIN CA 1 Bloco A Lote A - Lago Norte
+048,Posto Colorado BR,"eletroeletronicos\,pilhas",-15.685773174851853,-47.85978105351683,SPMN DF-003 3 - CONJ. A BL. H - POSTO
+049,Posto Ipiranga Pistão Sul,"eletroeletronicos\,pilhas",-15.836418060208654,-48.01262316724853,Av. das Araucárias 525 - Lote
+050,Posto Ipiranga Park Way,"eletroeletronicos\,pilhas",-15.850556989976642,-47.95544019175015,Spms/epia Conjunto D S/N Lote 7 - Nucleo Bandeirante
+051,Posto Guarapari Candangolândia,"eletroeletronicos\,pilhas",-15.848104308604364,-47.953924726551044,SPMS - Candangolândia
+052,Posto Petrobras Ceilândia,"eletroeletronicos\,pilhas",-15.787471083167674,-48.12395298583964,St. O QNO 6 - Ceilândia
+053,Leroy Merlin Guará,lampadas,-15.83504308606423,-47.95052214704823,Guará I Trecho 3 - Plano Piloto
+054,Carrefour Hipermercado Guará,"lampadas\,pilhas",-15.82969638829064,-47.9553685209073,SCEE / Sul Lote B - Guará
+055,Leroy Merlin Asa Norte,lampadas,-15.752363770864136,-47.9280299693149,SOFN - Área Especial
+056,Colunas Home Center,lampadas,-15.682365382747713,-48.19030693438879,Area Especial 3 Conjunto A 02 St. Norte - Brazlândia
+057,Raio Casa Construção e Ferramentas,lampadas,-15.803143472078938,-48.017432299999996,Rua 5/8 Chácara 114 Lote 2 Lojas 2 a 5 - Loja de esquina St. Hab. Vicente Pires
+058,Eletropiso,lampadas,-15.839631474604124,-48.05150128650691,St. B Sul CSB 7 - Taguatinga
+059,Hometeck Sistemas de Construção a Seco,lampadas,-15.802901878549994,-47.955224098150524,SIA Trecho 3 lote 445 - SIA
+060,Cecin Sarkis Guará,lampadas,-15.803322042164133,-47.949080328835635,SIA Q 5 C - Plano Piloto
+061,Cecin Sarkis Asa Sul,lampadas,-15.819634299465863,-47.90771005397233,CLS 110 Loja 3 SHCS
+062,Só Reparos Asa Norte,lampadas,-15.773305489892403,-47.877358315342555,Asa Norte Comércio Local Norte 404 Bloco A - Asa Norte
+063,Só Reparos Guará,lampadas,-15.806759552736505,-47.961341071164355,SIA Trecho 1 - Zona Industrial
+064,Só Reparos Asa Sul,lampadas,-15.821368868765024,-47.9183033,Asa Sul CRS 512 BL C - Asa Sul
+065,N B Lustres,lampadas,-15.822934370483472,-47.91748707301383,Comércio Local Sul 312 Bloco C Loja 4
+066,Parafusos & Cia Home,lampadas,-15.619088213398811,-47.64994538465743,42 St. Res. Leste | Buritís I Q 3
+067,ConstruHausen,lampadas,-15.603098323148853,-47.68118336986294,Condomínio Mansões Itiquira - Planaltina
+068,Atacadão Asa Norte,"lampadas\,pilhas",-15.734883474088225,-47.90509318465745,Setor Terminal Norte Conjunto H SHCN Conjunto H - Asa Norte
+069,Assaí Atacadista Guará,"lampadas\,pilhas",-15.793229371228634,-47.9461181,SIA Trecho 12 - Zona Industrial
+070,Assaí Atacadista Ceilândia,"lampadas\,pilhas",-15.820648823147527,-48.101015455821795,Ceilândia Sul QNM 11 MEZANINO 6 - Ceilândia
+071,Star Luz iluminação,lampadas,-15.81897713364071,-47.908198884657445,Asa Sul CLS 110 Bloco C Loja 7 - Asa Sul
+072,Dourado Materiais para Construção,lampadas,-15.865654677783528,-48.00826569815053,SHA CONJUNTO 04 Chácara 83 1 - lote 02 - ARNIQUEIRAS
+073,Supermercados Caíque,lampadas,-15.863914794321357,-48.07917491534258,QN 208 Lt 2/3 - Samambaia Norte
+074,Casa Grande Materiais Para Construção,lampadas,-15.848313119365507,-48.048108255821795,5997_St. D Sul QSD 18 - Taguatinga
+075,Carrefour Bairro Asa Norte II,"lampadas\,pilhas",-15.774466543054725,-47.887434184657444,Asa Norte Entrequadra Norte 504/505 Bloco A - Asa Norte
+076,Assaí Atacadista Taguatinga,"lampadas\,pilhas",-15.875106206368423,-48.02541491349308,QS 9 Lote 04 - Arniqueira
+077,Atacadão Taguatinga,"lampadas\,pilhas",-15.83284599032983,-48.081189542328715,QNL 01 Setor L Norte - Área Especial St. L Norte QNL 1 - Taguatinga
+078,Carrefour Bairro Lago Sul,"lampadas\,pilhas",-15.83574847113147,-47.834451115342546,Shis QI Lote G DF-025 - Lago Sul
+079,Carrefour Bairro,"lampadas\,pilhas",-15.842441077117346,-47.876288757671276,SHI/SUL QI 13 Bloco J - Lago Sul
+080,Carrefour Bairro Asa Sul I,"lampadas\,pilhas",-15.809558863890551,-47.884475426986164,Shc/sul Eq 402/403 - Asa Sul
+081,Carrefour Bairro Asa Norte Iv,"lampadas\,pilhas",-15.750343564980243,-47.894553315342556,St Setor Terminal Norte Lote J S/N Asa Norte 512/513 - Asa Norte
+082,Casa Oliveira,lampadas,-15.647703685577245,-47.78541227116435,QUADRA 13 CL 06 LOJAS 3 E 6 - Sobradinho
+083,Ferragens União Asa Norte,lampadas,-15.779915725362878,-47.88793352698616,SCLRN QD.703 BL.A loja 15 - Asa Norte 
+084,Havan,lampadas,-15.79013208657126,-47.94560382883563,SIA Trecho 14 - SIA
+085,Home Center Castelo Forte Samambaia,lampadas,-15.877164803500387,-48.08540302883564,Quadra 302 Conjunto 8 Lote 02 Lote 02 - Samambaia
+086,Home Center Castelo Forte Ceilândia,lampadas,-15.832233689813695,-48.09010749815052,S/N QNM 33 Area Especial E Parte A - Ceilândia
+087,Home Center Castelo Forte Recanto das Emas,lampadas,-15.903387604483322,-48.0696760693149,Q 104 Lts 12 E 13 - Recanto das Emas
+088,Home Center Castelo Forte Vicente Pires,lampadas,-15.790863983180747,-48.02434154232873,Rua 10B Chacara 135/2 3 a 9 Chac 135/1 St. Hab. Vicente Pires Lt 02 e 03
+089,Super Frota Supermercado,lampadas,-16.02136101384518,-48.067770228835634,St. Central - Gama
+090,DF Atacadista Materiais Elétricos,lampadas,-15.802045270930899,-47.954897599999995,St. Industria e Abastecimento Lt 440/450 LOTA 440/450 - SIA
+091,Biblioteca Pública de Sobradinho II,pilhas,-15.643259299335567,-47.82553980472484,Área Especial - Avenida Central - Conjunto 16 - Lote 03 Quadra AR 13 - Sobradinho II
+092,Administração Regional do Guará,pilhas,-15.825276094859172,-47.9755628,Guará II QE 25 - Guará
+093,Pão de Açúcar Asa Norte,pilhas,-15.772826615562852,-47.875347515342554,Asa Norte EQN 404/405 s/n Bloco A - Asa Norte
+094,Pão de Açúcar Gilberto Salomão,pilhas,-15.84534012314299,-47.89442506056135,St. de Habitações Individuais Sul Qi 05 Suis/Ci Conj F N 80 Subsolo - Centro
+095,Pão de Açúcar Asa Sul,pilhas,-15.8276085756153,-47.9272122693149,Asa Sul Scrs 516 BL A Ljs 45/46 - Asa Sul
+096,Ministério do Meio Ambiente,pilhas,-15.79832062572488,-47.87244272883562,Bloco B Eixo Monumental
+097,Pão de Açúcar Guará,pilhas,-15.816134530956557,-47.98102605582181,Sria - Área Especial K N 02 - Guará
+098,Sunsony Eletrônica,pilhas,-15.806359582870424,-48.06961364232872,Lote 25 Loja 1 Setor Qne 34 - Taguatinga
+099,Pão de Açúcar Sudoeste,pilhas,-15.795811346013917,-47.93032018650692,St. Sudoeste Comércio Local Sudoeste 6 - Sudoeste
+100,Pão de Açúcar Lago Norte,pilhas,-15.724904953508071,-47.87517066592221,SHIN Qi 02 AE A S/N - Lago Norte
+101,Pão de Açúcar Águas Claras,pilhas,-15.842759807126004,-48.02334081349307,Q 206 - Águas Claras
+102,Pão de Açúcar Asa Sul,pilhas,-15.819799748991317,-47.89455811392491,Asa Sul Entrequadra Sul 406/407 - Plano Piloto
+103,Multicoisas Sudoeste,pilhas,-15.802783325051108,-47.928315228835636,Bloco B - Clsw - Quadra 104 - Cruzeiro
+104,Multicoisas 108 Sul,pilhas,-15.815453016915152,-47.90267687116436,Asa Sul Comércio Local Sul 108 BL B - Asa Sul
+105,Multicoisas 307 Norte,pilhas,-15.768120634786701,-47.887167298150516,SHCN CL Quadra 307 bloco C loja 20 SHCN
+106,Multicoisas Águas Claras,pilhas,-15.840661196919386,-48.02294112883565,R. 19 Sul 16 - Lote Loja 03 - Águas Claras
+107,Pão de Açúcar Asa Sul,pilhas,-15.820678992823762,-47.89812611377413,SHCS Superquadra Sul 407 Mc Asa Sul 309 S/N Bloco A - Plano Piloto
+108,Administração Regional do Jardim Botânico,pilhas,-15.883939880049844,-47.8152787,Q. Eq3/5 0 - Jardim Botânico
+109,Administração Regional do Lago Norte,pilhas,-15.72175953231857,-47.88136994232872,SOBRELOJA DECK NORTE CA 1 BLOCO A - Lago Norte
+110,Administração Regional de Samambaia,pilhas,-15.88006579143767,-48.0863051,Centro Urbano Q. 302 - Samambaia
+111,Administração Regional do Gama,pilhas,-16.01588409593846,-48.06462522883564,Área Especial s/n - Gama
+112,Administração Regional de Riacho Fundo,pilhas,-15.883824956633978,-48.01878738650692,Riacho Fundo CLN 7 Bl A B s/n - Riacho Fundo
+113,Associação Brasiliense de Construtores (ASBRACO),pilhas,-15.79973214503157,-47.969703930685114,Sia Tr 4 lt 2000 c Bs N - SIA
+114,Casas Bahia Gama,pilhas,-16.018490223206193,-48.06578525767128,Sigla Projeção 9 Não Tem - Gama
+115,Casas Bahia Planaltina,pilhas,-15.618243114519098,-47.65222292883564,St. de Hotéis e Diversões 07/08/09 - Planaltina
+116,Casas Bahia Recanto das Emas,pilhas,-15.90308569953528,-48.06620246137022,103 Q 103 Conjunto 16 - Recanto das Emas
+117,Casas Bahia Santa Maria,pilhas,-16.00584488857642,-48.00022577116436,Avenida Alagado Cl114 - Santa Maria
+118,Drogasil Samambaia,pilhas,-15.872075024508964,-48.06735898650692,QN 314 Conjunto 1 LT.1 - 1ºANDAR - Samambaia
