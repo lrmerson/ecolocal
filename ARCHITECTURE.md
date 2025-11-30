@@ -40,6 +40,14 @@ Cliente HTTP
     ↓
 [Filtro de Dados]
     ↓
+[Se lat/lon fornecidos: Chamar enriquecer_pontos_com_distancias()]
+    ↓
+[Google Distance Matrix API (com chunking)]
+    ↓
+[Adicionar distance_km e duration_min]
+    ↓
+[Se n fornecido: Filtrar N pontos mais próximos]
+    ↓
 [Formatação JSON]
     ↓
 Resposta HTTP (JSON)
@@ -142,6 +150,23 @@ curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&page=2"
 - Sem queries desnecessárias
 - Possibilidade de paginação
 
+## Integração com Google Distance Matrix API
+
+### Implementado
+
+- ✓ Função `get_distances_from_google()` para chamar API
+- ✓ Função `enriquecer_pontos_com_distancias()` para orquestração
+- ✓ Chunking para lidar com limite de 25 destinos
+- ✓ Tratamento de erros com fallback
+- ✓ Campos `distance_km` e `duration_min` nas respostas
+- ✓ Ordenação por tempo de direção para encontrar pontos próximos
+
+### Requisitos
+
+- Chave de API do Google (Distance Matrix API habilitada)
+- Pacote `requests` instalado
+- Coordenadas de latitude/longitude válidas do usuário
+
 ## Próximas Melhorias Possíveis
 
 - [ ] Autenticação e autorização
@@ -153,3 +178,5 @@ curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&page=2"
 - [ ] CI/CD pipeline
 - [ ] Rate limiting
 - [ ] Logging estruturado
+- [ ] Cache de resultados de Google API
+- [ ] Suporte a múltiplos modos de transporte (caminhada, bicicleta, etc)

@@ -1,5 +1,45 @@
 # Resumo das Alterações - REST API Implementation
 
+## Versão 1.1 - Google Distance Matrix API Integration
+
+### Novas Funcionalidades
+
+1. **Integração com Google Distance Matrix API**
+   - Cálculo de distância e tempo de direção em tempo real
+   - Função `get_distances_from_google()` para chamar Google API
+   - Função `enriquecer_pontos_com_distancias()` para orquestração
+
+2. **Filtro por Proximidade**
+   - Novos parâmetros: `lat`, `lon`, `n`
+   - Retorna N pontos mais próximos com tempo de direção mínimo
+   - Suporta chunking para limite de 25 destinos da API
+
+3. **Novos Campos de Resposta**
+   - `distance_km`: Distância em quilômetros
+   - `duration_min`: Tempo de direção em minutos
+
+### Arquivos Modificados
+
+- `coleta_service.py`: Adicionadas funções Google API
+- `app.py`: Atualizado para aceitar lat/lon/n
+- `README.md`: Documentação de proximidade
+- `ARCHITECTURE.md`: Fluxo com Google API
+- `requirements.txt`: Adicionado requests==2.31.0
+- `QUICKSTART.txt`: Exemplos com proximidade
+- `CHANGELOG.md`: Este arquivo
+- `CHECKLIST.txt`: Google API requirements
+- `SUMMARY.md`: Estatísticas atualizadas
+
+### Requisitos
+
+- Google Cloud account com Distance Matrix API habilitada
+- API key do Google
+- Pacote requests instalado
+
+---
+
+## Versão 1.0 - REST API Implementation
+
 ## O Que Foi Feito
 
 ### 1. **Refatoração da Lógica de Negócio** (`coleta_service.py`)

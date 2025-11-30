@@ -13,12 +13,15 @@ def coleta_pontos():
                Exemplo: ?tipos=eletroeletronicos,pilhas
         page: Número da página (padrão: 1)
               Cada página contém 10 resultados
-        limit: Número máximo de resultados (padrão: todos, ignorado se page for fornecido)
+        lat: Latitude do usuário (opcional, para cálculo de proximidade)
+        lon: Longitude do usuário (opcional, para cálculo de proximidade)
+        n: Número de pontos mais próximos a retornar (padrão: 5)
     
-    Returns:
+    Retorna:
         JSON com pontos de coleta (filtrados ou todos)
+        Se lat/lon fornecidos: inclui distance_km e duration_min
         
-    Status Codes:
+    Códigos de Status:
         200: Sucesso
         500: Erro interno do servidor
     """

@@ -34,6 +34,9 @@ Retorna pontos de coleta com opções de filtro por tipo e paginação.
 - `page`: Número da página (padrão: 1)
   - Cada página contém 10 resultados
   - Exemplo: `?page=2`
+- `lat`: Latitude do usuário (para calcular pontos próximos por tempo de direção)
+- `lon`: Longitude do usuário (para calcular pontos próximos por tempo de direção)
+- `n`: Número de pontos mais próximos a retornar (padrão: 5, usado com lat/lon)
 
 **Exemplos de Requisição:**
 ```bash
@@ -48,6 +51,12 @@ curl "http://localhost:5000/api/coleta-pontos?page=2"
 
 # Filtrar e ir para página 3
 curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&page=3"
+
+# Encontrar 3 pontos mais próximos (via Google Distance Matrix API)
+curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=3"
+
+# Encontrar 5 pontos mais próximos de qualquer tipo
+curl "http://localhost:5000/api/coleta-pontos?lat=-23.5505&lon=-46.6333&n=5"
 ```
 
 **Respostas (200 OK):**
@@ -97,6 +106,49 @@ Com filtro por tipo:
       "latitude": -15.733847664170918,
       "longitude": -47.899207515917645,
       "endereco": "Boulevard Shopping ST Setor..."
+    }
+  ]
+}
+```
+
+Com filtro por proximidade (Google Distance Matrix API):
+```json
+{
+  "total": 3,
+  "page": 1,
+  "page_size": 10,
+  "total_pages": 1,
+  "tipos_filtrados": ["pilhas"],
+  "pontos": [
+    {
+      "id": "001",
+      "nome": "Zero Impacto Logística Reversa",
+      "tipo_lixo": "eletroeletronicos\\,eletrodomesticos\\,pilhas",
+      "latitude": -15.762421707078582,
+      "longitude": -47.935475219000324,
+      "endereco": "Saa Q 2 SETOR DE ABASTECIMENTO...",
+      "distance_km": 12.5,
+      "duration_min": 18.3
+    },
+    {
+      "id": "003",
+      "nome": "Carrefour Hipermercado",
+      "tipo_lixo": "eletroeletronicos\\,eletrodomesticos\\,pilhas",
+      "latitude": -15.733847664170918,
+      "longitude": -47.899207515917645,
+      "endereco": "Boulevard Shopping ST Setor...",
+      "distance_km": 8.2,
+      "duration_min": 12.1
+    },
+    {
+      "id": "005",
+      "nome": "Outro Ponto de Coleta",
+      "tipo_lixo": "pilhas\\,lampadas",
+      "latitude": -15.791111,
+      "longitude": -47.888888,
+      "endereco": "Endereço...",
+      "distance_km": 15.7,
+      "duration_min": 22.5
     }
   ]
 }
@@ -165,6 +217,20 @@ response = requests.get(
 )
 pontos = response.json()
 print(f"Encontrados {pontos['total']} pontos com ambos os tipos")
+
+# Encontrar 3 pontos mais próximos (requer Google API key)
+response = requests.get(
+    'http://localhost:5000/api/coleta-pontos',
+    params={
+        'tipos': 'pilhas',
+        'lat': -23.5505,
+        'lon': -46.6333,
+        'n': 3
+    }
+)
+pontos = response.json()
+for ponto in pontos['pontos']:
+    print(f"{ponto['nome']}: {ponto['duration_min']:.1f} min de direção")
 ```
 
 ### JavaScript (Fetch)
@@ -185,7 +251,44 @@ fetch(`http://localhost:5000/api/coleta-pontos?tipos=${tipos}`)
 fetch('http://localhost:5000/api/coleta-pontos?page=2')
   .then(res => res.json())
   .then(data => console.log(`Mostrando ${data.pontos.length} pontos (página ${data.page} de ${data.total_pages})`))
+
+// Encontrar pontos próximos (requer Google API key)
+fetch('http://localhost:5000/api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=5')
+  .then(res => res.json())
+  .then(data => {
+    data.pontos.forEach(ponto => {
+      console.log(`${ponto.nome}: ${ponto.duration_min.toFixed(1)} min`);
+    });
+  });
 ```
+
+## Integração com Google Distance Matrix API
+
+### Configuração Necessária
+
+1. Obtenha uma chave de API do Google:
+   - Acesse [Google Cloud Console](https://console.cloud.google.com/)
+   - Crie um novo projeto
+   - Ative a API "Distance Matrix"
+   - Crie uma chave de API
+
+2. Configure a chave em `coleta_service.py`:
+   ```python
+   GOOGLE_API_KEY = "sua_chave_api_aqui"
+   ```
+
+3. Instale dependências:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Como Funciona
+
+- Quando `lat` e `lon` são fornecidos, a API chama Google Distance Matrix para calcular:
+  - `distance_km`: Distância em quilômetros via dirigindo
+  - `duration_min`: Tempo de direção em minutos
+- O parâmetro `n` retorna apenas os N pontos com menor `duration_min` (tempo de direção)
+- Usa chunking para lidar com limite de 25 destinos por requisição da Google API
 
 ## Notas
 
@@ -193,3 +296,5 @@ fetch('http://localhost:5000/api/coleta-pontos?page=2')
 - Os tipos de lixo no CSV usam `\,` como separador (vírgula escapada)
 - O filtro é case-insensitive
 - O filtro usa lógica AND: retorna apenas pontos que têm TODOS os tipos especificados
+- Proximidade é calculada por tempo de direção (não distância em linha reta)
+- Requer API key válida do Google para funcionalidade de proximidade

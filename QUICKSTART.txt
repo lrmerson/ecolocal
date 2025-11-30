@@ -84,6 +84,15 @@
     python test_manual.py
 
 
+  OPÇÃO E: Com Proximidade (Google API)
+  ─────────────────────────────────────────────────────────────────────────────
+
+    # Encontrar 3 pontos mais próximos
+    curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=3"
+    
+    # Nota: Requer Google API key configurada em coleta_service.py
+
+
 4️⃣  EXECUTAR TESTES UNITÁRIOS
 ─────────────────────────────────────────────────────────────────────────────
 
@@ -111,7 +120,7 @@
   projeto-apc/
   │
   ├── app.py                      ← ⭐ Endpoints REST (Flask)
-  │   └── GET /api/coleta-pontos [?tipos=...] [?limit=...] [?offset=...]
+  │   └── GET /api/coleta-pontos [?tipos=...] [?page=...] [?lat=...] [?lon=...] [?n=...]
   │
   ├── coleta_service.py           ← ⭐ Lógica de Negócio
   │   └── ler_pontos_por_tipo_lixo()
@@ -174,11 +183,45 @@
        }
 
   2️⃣  Listar Todos
-     GET /api/coleta-pontos?limit=10&offset=0
+     GET /api/coleta-pontos?page=1
      
      Query params:
-       - limit (opcional): máximo de resultados
-       - offset (opcional): quantos pular
+       - page (opcional): número da página (padrão: 1)
+       - 10 resultados por página
+     
+     Resposta:
+       {
+         "total": 119,
+         "page": 1,
+         "page_size": 10,
+         "total_pages": 12,
+         "pontos": [...]
+       }
+
+  3️⃣  Encontrar Pontos Próximos
+     GET /api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=5
+     
+     Query params:
+       - lat: Latitude do usuário
+       - lon: Longitude do usuário
+       - n: Número de pontos mais próximos
+       - tipos: Filtro por tipo (opcional)
+     
+     Resposta:
+       {
+         "total": 5,
+         "pontos": [
+           {
+             "id": "001",
+             "nome": "...",
+             "distance_km": 12.5,
+             "duration_min": 18.3
+           },
+           ...
+         ]
+       }
+     
+     Nota: Requer Google API key configurada
      
      Resposta:
        {

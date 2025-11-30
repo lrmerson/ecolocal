@@ -9,6 +9,13 @@ REQUISITOS FUNCIONAIS
     - 1 endpoint REST consolidado
     - Framework: Flask
 
+[✓] Integração com Google Distance Matrix API
+    - Função get_distances_from_google() implementada
+    - Função enriquecer_pontos_com_distancias() para orquestração
+    - Chunking para 25 destinos por requisição
+    - Parâmetros lat/lon/n suportados
+    - Campos distance_km e duration_min retornados
+
 [✓] Padrão REST implementado
     - URIs baseadas em recursos (coleta-pontos)
     - HTTP GET para leitura
@@ -43,11 +50,12 @@ ENDPOINTS REST
 ==============
 
 [✓] GET /api/coleta-pontos
-    - Listar todos, filtrar por tipo(s), ou paginar
-    - Query parameters: tipos, page (todos opcionais)
+    - Listar todos, filtrar por tipo(s), paginar ou encontrar próximos
+    - Query parameters: tipos, page, lat, lon, n (todos opcionais)
     - Página padrão: 1, com 10 resultados por página
     - Retorna JSON com metadados
     - Status: 200 (ok), 500 (erro)
+    - Suporta filtro de proximidade via Google API
 ARQUIVOS CRIADOS
 ================
 
@@ -85,6 +93,7 @@ ARQUIVOS CRIADOS
     - Dependências Python
     - Flask 3.0.0
     - Werkzeug 3.0.1
+    - requests 2.31.0 (para Google API)
 
 [✓] README.md
     - Guia completo
@@ -225,6 +234,12 @@ FUNCIONALIDADES EXTRAS
     - test_manual.py
     - Menu de opções
 
+[✓] Filtro de Proximidade
+    - Google Distance Matrix API
+    - Cálculo de tempo de direção
+    - Chunking para múltiplos pontos
+    - Ordenação por proximidade
+
 
 DOCUMENTAÇÃO
 ============
@@ -246,6 +261,8 @@ COMPATIBILIDADE
 [✓] Flask 3.0.0+
 [✓] Módulo CSV (built-in)
 [✓] Módulo JSON (built-in)
+[✓] Google Distance Matrix API
+[✓] requests 2.31.0+
 
 
 TESTES EXECUTADOS
@@ -275,10 +292,12 @@ PRÓXIMOS PASSOS RECOMENDADOS
 =============================
 
 Curto Prazo:
+  [ ] Obter Google API key
+  [ ] Configurar API key em coleta_service.py
   [ ] Instalar dependências: pip install -r requirements.txt
   [ ] Rodar testes: python -m unittest test_coleta_service.py -v
   [ ] Iniciar servidor: python app.py
-  [ ] Testar endpoints
+  [ ] Testar endpoints com proximidade
 
 Médio Prazo:
   [ ] Adicionar autenticação (JWT)
@@ -309,6 +328,14 @@ NOTAS
 - Case-insensitive e normaliza espaços em branco
 
 - Estrutura modular facilita manutenção e evolução
+
+- Google Distance Matrix API usa chunking para 25 destinos por requisição
+
+- Proximidade é calculada por tempo de direção, não distância em linha reta
+
+- API key do Google deve ser configurada antes de usar filtro de proximidade
+
+- Campos distance_km e duration_min apenas aparecem quando lat/lon fornecidos
 
 
 ========================================

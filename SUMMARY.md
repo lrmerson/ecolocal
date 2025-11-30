@@ -8,9 +8,13 @@
 
 1. **`coleta_service.py`** - Lógica de negócio
    - Função `ler_pontos_por_tipo_lixo()` refatorada
+   - Função `get_distances_from_google()` para Google API
+   - Função `enriquecer_pontos_com_distancias()` para orquestração
+   - Função `pontos_mais_proximos()` para filtrar N mais próximos
+   - Integração com Google Distance Matrix API
    - Independente de HTTP
    - Tratamento robusto de erros
-   - Docstrings completas
+   - Docstrings completas em Português
 
 2. **`app.py`** - Aplicação Flask (REST API)
    - 1 endpoint REST consolidado:
@@ -43,6 +47,7 @@
 6. **`requirements.txt`** - Dependências Python
    - flask==3.0.0
    - werkzeug==3.0.1
+   - requests==2.31.0
 
 7. **`README.md`** - Documentação Completa
    - Instruções de instalação
@@ -79,6 +84,8 @@
 - Framework: Flask
 - Padrão REST: Resource-based URIs, HTTP methods, status codes
 - Formato: JSON
+- Suporta filtro de proximidade via Google Distance Matrix API
+- Parâmetros: tipos, page, lat, lon, n
 
 ### ✅ Boas Práticas REST API Design
 - [x] URIs baseadas em recursos (coleta-pontos)
@@ -98,6 +105,7 @@
 - [x] Cobertura de casos normais, limites e erros
 - [x] Uso de arquivo CSV temporário
 - [x] Testes executáveis com `unittest`
+- [x] Todas as docstrings traduzidas para Português (Brasil)
 
 ---
 
@@ -106,15 +114,17 @@
 | Métrica | Valor |
 |---------|-------|
 | Arquivos criados | 9 |
-| Arquivos modificados | 2 |
+| Arquivos modificados | 8 |
 | Testes unitários | 9 |
 | Taxa de sucesso nos testes | 100% (9/9) |
 | Endpoints REST | 1 |
-| Linhas de código (coleta_service.py) | 43 |
-| Linhas de código (app.py) | 130 |
+| Linhas de código (coleta_service.py) | 130+ |
+| Linhas de código (app.py) | 92 |
 | Linhas de testes | 150+ |
 | Exemplos de uso | 9 |
-| Documentação (linhas) | 400+ |
+| Documentação (linhas) | 600+ |
+| Funções Google API | 3 |
+| Integração Google Distance Matrix | Sim ✓ |
 
 ---
 
@@ -179,22 +189,33 @@ print(response.json())
 ```
 Cliente HTTP (curl, requests, browser)
          ↓
-GET /api/coleta-pontos [?tipos=...] [?page=...] 
+GET /api/coleta-pontos [?tipos=...] [?page=...] [?lat=...] [?lon=...] [?n=...]
          ↓
     [app.py - Flask]
-    - Validação
+    - Validação de parâmetros
     - Roteamento HTTP
     - Paginação fixa (10 itens/página)
     - Formatação JSON
          ↓
-    [coleta_service.py] (se tipos fornecido)
+    [coleta_service.py]
     - Lógica de filtro
+    - Leitura CSV
+    - Se lat/lon: Chamar Google API
+    - Se n: Filtrar N mais próximos
     - Sem dependências HTTP
     - Testável
+         ↓
+    Se lat/lon fornecidos:
+    ├─ [enriquecer_pontos_com_distancias()]
+    ├─ [get_distances_from_google()]
+    └─ [Google Distance Matrix API]
          ↓
     [pontos-de-coleta.csv]
     - Dados (119 pontos)
     - Leituras por query
+         ↓
+    Resposta JSON com pontos
+    (opcionalmente com distance_km e duration_min)
 ```
 
 ---
@@ -315,14 +336,16 @@ projeto-apc/
 
 - [ ] Autenticação (JWT)
 - [ ] Banco de dados (PostgreSQL)
-- [ ] Cache (Redis)
+- [ ] Cache (Redis) para resultados de Google API
 - [ ] Documentação Swagger/OpenAPI
-- [ ] Testes de integração
-- [ ] Docker container
+- [ ] Testes de integração com Google API
+- [ ] Docker container com variáveis de ambiente
 - [ ] CI/CD pipeline
 - [ ] Logging estruturado
 - [ ] Rate limiting
 - [ ] Compressão GZIP
+- [ ] Suporte a múltiplos modos de transporte
+- [ ] Testes com coordenadas reais
 
 ---
 
