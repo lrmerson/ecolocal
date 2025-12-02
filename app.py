@@ -1,7 +1,16 @@
-from flask import Flask, request, jsonify
-from coleta_service import ler_pontos_por_tipo_lixo
+from flask import Flask, request, jsonify, render_template, send_from_directory
+from coleta_service import ler_pontos_por_tipo_lixo, ler_todos_pontos
+import folium
+from folium.plugins import LocateControl
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static', template_folder='templates')
+
+@app.route('/')
+def home():
+    """Página inicial com informações sobre o projeto."""
+    return render_template('index.html')
+
 
 @app.route('/api/coleta-pontos', methods=['GET'])
 def coleta_pontos():
@@ -93,6 +102,131 @@ def coleta_pontos():
         return jsonify({'error': 'Arquivo CSV não encontrado'}), 500
     except Exception as e:
         return jsonify({'error': f'Erro ao processar requisição: {str(e)}'}), 500
+
+
+@app.route('/mapa')
+def mapa():
+    """
+    Rota para exibir mapa interativo com filtros.
+    
+    Query Parameters:
+        tipos: Tipos de lixo separados por vírgula (opcional)
+        lat: Latitude do usuário (opcional)
+        lon: Longitude do usuário (opcional)
+    """
+    try:
+        # Coordenadas padrão (Brasília)
+        centro_lat, centro_lon = -15.793889, -47.882778
+        
+        # Criar mapa
+        mapa = folium.Map(
+            location=[centro_lat, centro_lon],
+            zoom_start=13,
+            tiles='OpenStreetMap'
+        )
+        
+        # Adicionar controle de localização
+        LocateControl(
+            strings={"title": "Mostrar minha localização", "popup": "Você está aqui"},
+            locateOptions={"enableHighAccuracy": True, "maxZoom": 16}
+        ).add_to(mapa)
+        
+        # HTML para filtro
+        filter_html = '''
+            <div style="position: fixed; top: 10px; left: 50px; z-index:9999; font-size:14px; 
+                        background-color: white; padding: 10px; border-radius: 5px; border: 2px solid rgba(0,0,0,0.2);">
+                <b>🔍 Filtrar por:</b><br>
+                <a href="/mapa" style="text-decoration: none; color: black; display: block; margin-bottom: 5px;">✓ Todos</a>
+                <a href="/mapa?tipos=eletroeletronicos" style="text-decoration: none; color: black; display: block; margin-bottom: 5px;">💻 Eletrônicos</a>
+                <a href="/mapa?tipos=eletrodomesticos" style="text-decoration: none; color: black; display: block; margin-bottom: 5px;">🔌 Eletrodomésticos</a>
+                <a href="/mapa?tipos=pilhas" style="text-decoration: none; color: black; display: block; margin-bottom: 5px;">🔋 Pilhas</a>
+                <a href="/mapa?tipos=lampadas" style="text-decoration: none; color: black; display: block;">💡 Lâmpadas</a>
+            </div>
+        '''
+        mapa.get_root().html.add_child(folium.Element(filter_html))
+        
+        # HTML para botão "Sobre"
+        sobre_html = '''
+            <div style="position: fixed; top: 10px; right: 60px; z-index:9999;">
+                <a href="/sobre" style="background-color: white; padding: 8px 12px; border-radius: 5px; 
+                   text-decoration: none; border: 2px solid rgba(0,0,0,0.2); color: black; 
+                   font-weight: bold; display: block; text-align: center;">ℹ️ Sobre</a>
+            </div>
+        '''
+        mapa.get_root().html.add_child(folium.Element(sobre_html))
+        
+        # Obter parâmetros
+        tipos_param = request.args.get('tipos')
+        user_lat = request.args.get('lat', type=float)
+        user_lon = request.args.get('lon', type=float)
+        n = request.args.get('n', default=5, type=int)
+        
+        # Obter pontos - reutilizando funções de coleta_service.py
+        if tipos_param:
+            tipos_lixo = [t.strip() for t in tipos_param.split(',')]
+            # Se lat/lon não foram obtidos, não enviar para evitar erro
+            if user_lat and user_lon:
+                pontos_dict = ler_pontos_por_tipo_lixo(tipos_lixo, user_lat, user_lon, n)
+            else:
+                # Se sem localização, retornar todos os pontos do tipo sem ordenar por proximidade
+                pontos_dict = ler_pontos_por_tipo_lixo(tipos_lixo)
+        else:
+            # Se não houver filtro, listar todos
+            pontos_dict = ler_todos_pontos()
+        
+        pontos = list(pontos_dict.values()) if pontos_dict else []
+        
+        # Adicionar marcadores ao mapa
+        for ponto in pontos:
+            lat = ponto['latitude']
+            lon = ponto['longitude']
+            nome = ponto['nome']
+            endereco = ponto.get('endereco', 'N/A')
+            tipo_lixo = ponto['tipo_lixo']
+            
+            # Construir popup com informações
+            distance_info = ""
+            if 'distance_km' in ponto and ponto['distance_km'] is not None and 'duration_min' in ponto and ponto['duration_min'] is not None:
+                distance_info = f"<br><b>Distância:</b> {ponto['distance_km']:.1f} km<br><b>Tempo:</b> {ponto['duration_min']:.0f} min"
+            
+            google_maps_url = f"https://www.google.com/maps?q={lat},{lon}"
+            popup_html = f'''
+                <div style="min-width: 200px; font-family: Arial, sans-serif;">
+                    <b style="font-size: 14px;">{nome}</b><br>
+                    <small>{endereco}</small><br>
+                    <b>Tipos:</b> {tipo_lixo}<br>
+                    {distance_info}
+                    <br><a href="{google_maps_url}" target="_blank" style="color: blue; text-decoration: none;">
+                    📍 Ver no Google Maps</a>
+                </div>
+            '''
+            
+            folium.Marker(
+                location=[lat, lon],
+                popup=folium.Popup(popup_html, max_width=300),
+                icon=folium.Icon(color='red', icon='info-sign')
+            ).add_to(mapa)
+        
+        # Se usuário forneceu localização, adicionar marcador azul
+        if user_lat and user_lon:
+            folium.Marker(
+                location=[user_lat, user_lon],
+                popup='📍 Sua localização',
+                icon=folium.Icon(color='blue', icon='user', prefix='fa')
+            ).add_to(mapa)
+        
+        return mapa.get_root().render()
+        
+    except FileNotFoundError as e:
+        return f"<h1>Erro</h1><p>Arquivo não encontrado: {str(e)}</p>", 500
+    except Exception as e:
+        return f"<h1>Erro ao gerar mapa</h1><p>{str(e)}</p>", 500
+
+
+@app.route('/sobre')
+def sobre():
+    """Página sobre o projeto."""
+    return render_template('sobre.html')
 
 
 if __name__ == '__main__':

@@ -1,12 +1,29 @@
 import csv
 import requests
+import os
+import json
+import socket
 
-GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY"
+# Forçar uso de IPv4 apenas para resolver problemas de lentidão no Windows
+original_getaddrinfo = socket.getaddrinfo
+def getaddrinfo_ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
+    return original_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+socket.getaddrinfo = getaddrinfo_ipv4_only
+
+# Tentar obter a chave de variável de ambiente, senão usar placeholder
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "YOUR_GOOGLE_API_KEY")
+
+# Avisar se a chave não foi configurada
+if GOOGLE_API_KEY == "YOUR_GOOGLE_API_KEY":
+    print("\n⚠️  AVISO: Chave de API do Google não configurada!")
+    print("   Configure a variável de ambiente GOOGLE_API_KEY com sua chave real.")
+    print("   Sem a chave, a função de proximidade não funcionará.\n")
 
 
 def get_distances_from_google(origin_lat, origin_lon, destinations):
     """
-    Chama a API Google Distance Matrix para obter distância e tempo de direção.
+    Chama a Google Routes API para obter distância e tempo de direção.
+    Obs: A Distance Matrix API foi descontinuada, usando Routes API agora.
     
     Args:
         origin_lat: Latitude do usuário
@@ -19,53 +36,107 @@ def get_distances_from_google(origin_lat, origin_lon, destinations):
     if not destinations:
         return []
     
-    origin = f"{origin_lat},{origin_lon}"
-    dest_str = "|".join([f"{lat},{lon}" for lat, lon in destinations])
+    # Verificar se a chave de API foi configurada
+    if GOOGLE_API_KEY == "YOUR_GOOGLE_API_KEY":
+        print("❌ Erro: Chave de API do Google não configurada!")
+        return [{"distance_km": None, "duration_min": None}] * len(destinations)
     
-    url = "https://maps.googleapis.com/maps/api/distancematrix/json"
-    
-    params = {
-        "origins": origin,
-        "destinations": dest_str,
-        "mode": "driving",
-        "units": "metric",
-        "key": GOOGLE_API_KEY
+    url = "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix"
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": GOOGLE_API_KEY,
+        "X-Goog-FieldMask": "originIndex,destinationIndex,distanceMeters,duration"
     }
+
+    results = []
     
-    try:
-        resposta = requests.get(url, params=params).json()
+    # Chamar a API para cada destino (Routes API não suporta múltiplos destinos em uma chamada)
+    for dest_lat, dest_lon in destinations:
+
+        payload = {
+            "origins": [
+                {
+                    "waypoint": {
+                        "location": {
+                            "latLng": {
+                                "latitude": origin_lat,
+                                "longitude": origin_lon
+                            }
+                        }
+                    }
+                }
+            ],
+            "destinations": [
+                {
+                    "waypoint": {
+                        "location": {
+                            "latLng": {
+                                "latitude": dest_lat,
+                                "longitude": dest_lon
+                            }
+                        }
+                    }
+                }
+            ],
+            "travelMode": "DRIVE"
+        }
         
-        if resposta.get("status") != "OK":
-            raise Exception(f"Erro na API Google: {resposta.get('status')}")
-        
-        results = []
-        elements = resposta["rows"][0]["elements"]
-        
-        for element in elements:
-            if element["status"] == "OK":
-                dist_m = element["distance"]["value"]
-                dur_s = element["duration"]["value"]
+        print(f"Debug - Payload enviado:")
+        print(f"  Origin: lat={origin_lat}, lon={origin_lon}")
+        print(f"  Destination: lat={dest_lat}, lon={dest_lon}")
+        print(f"  Payload completo: {json.dumps(payload, indent=2)}")
+
+        try:
+            resposta = requests.post(
+                url, 
+                headers=headers, 
+                data=json.dumps(payload), 
+                timeout=10,
+                proxies={'http': None, 'https': None}  # Desabilita detecção automática de proxy
+            ).json()
+            print(f"Debug - Resposta API para destino ({dest_lat}, {dest_lon}): {resposta}")
+            
+            # A resposta é uma lista de elementos no formato:
+            # [{'originIndex': 0, 'destinationIndex': 0, 'distanceMeters': 21443, 'duration': '1708s'}]
+            if resposta and isinstance(resposta, list) and len(resposta) > 0:
+                elemento = resposta[0]
+                
+                # Distância em metros
+                dist_m = elemento.get("distanceMeters", 0)
+                
+                # Duração em segundos (formato "1234s")
+                dur_s = elemento.get("duration", "0s")
+                # Converter string de duração (ex: "1708s") para segundos
+                dur_seconds = float(dur_s.rstrip('s')) if isinstance(dur_s, str) else dur_s
+                
                 results.append({
                     "distance_km": dist_m / 1000,
-                    "duration_min": dur_s / 60
+                    "duration_min": dur_seconds / 60
                 })
+                print(f"✅ Sucesso: {dist_m/1000:.2f} km, {dur_seconds/60:.1f} min")
             else:
+                # Se não houver resultado válido, retornar None
+                print(f"⚠️  Aviso: resposta vazia ou inválida da API para destino ({dest_lat}, {dest_lon})")
                 results.append({
                     "distance_km": None,
                     "duration_min": None
                 })
         
-        return results
+        except Exception as e:
+            print(f"❌ Erro ao chamar API Google Routes: {str(e)}")
+            results.append({
+                "distance_km": None,
+                "duration_min": None
+            })
     
-    except Exception as e:
-        print(f"Erro ao chamar API Google: {str(e)}")
-        return [{"distance_km": None, "duration_min": None}] * len(destinations)
+    return results
+
+
 
 
 def enriquecer_pontos_com_distancias(pontos, user_lat, user_lon):
     """
-    Adiciona distance_km e duration_min a cada ponto usando API Google.
-    Trata o limite de 25 destinos da API com chunking.
+    Adiciona distance_km e duration_min a cada ponto usando Google Routes API.
     
     Args:
         pontos: Dicionário de pontos {id: {latitude, longitude, ...}}
@@ -81,13 +152,9 @@ def enriquecer_pontos_com_distancias(pontos, user_lat, user_lon):
     # Extrair destinos como lista de tuplas (lat, lon)
     destinations = [(ponto['latitude'], ponto['longitude']) for ponto in pontos.values()]
     
-    # Obter distâncias da API Google (trata limite de 25 pontos com chunking)
-    results = []
-    for i in range(0, len(destinations), 25):
-        chunk = destinations[i:i+25]
-        print(f"Chamando API Google para lote {i//25 + 1}, {len(chunk)} pontos...")
-        chunk_results = get_distances_from_google(user_lat, user_lon, chunk)
-        results.extend(chunk_results)
+    # Obter distâncias da API Google Routes (processa todos os pontos)
+    print(f"Chamando API Google Routes para {len(destinations)} pontos...")
+    results = get_distances_from_google(user_lat, user_lon, destinations)
     
     # Adicionar distância e duração a cada ponto
     ponto_list = list(pontos.items())
@@ -169,14 +236,16 @@ def pontos_mais_proximos(pontos, n):
         return {}
     
     def ordem_dist(tupla):
-        return tupla[1]
+        # Se duration_min for None, colocar no final (infinito)
+        duration = tupla[1]
+        return duration if duration is not None else float('inf')
     
     def pontos_ordenados(pontos, n):
         pontos_ordem = []
         for id in pontos:
             dist_ponto = (id, pontos[id].get('duration_min', float('inf')))
             pontos_ordem.append(dist_ponto)
-        pontos_ordem.sort(key= ordem_dist)
+        pontos_ordem.sort(key=ordem_dist)
         if len(pontos_ordem) < n:
             return pontos_ordem
         return pontos_ordem[:n]
@@ -188,3 +257,35 @@ def pontos_mais_proximos(pontos, n):
             pontos_refinados[id_ponto] = pontos[id_ponto]
         return pontos_refinados
     return refinar_pontos(pontos, pontos_ordenados(pontos, n))
+
+
+def ler_todos_pontos(csv_file="pontos-de-coleta.csv"):
+    """
+    Lê todos os pontos do CSV sem filtros.
+    
+    Args:
+        csv_file: Caminho do arquivo CSV
+        
+    Retorna:
+        Dicionário com todos os pontos, chaveado por ID
+    """
+    pontos = {}
+    try:
+        with open(csv_file, newline='', encoding='utf-8') as arquivo:
+            leitor = csv.DictReader(arquivo, skipinitialspace=True)
+            for row in leitor:
+                if row['tipo_lixo']:
+                    pontos[row['id']] = {
+                        'id': row['id'],
+                        'nome': row['nome'],
+                        'tipo_lixo': row['tipo_lixo'],
+                        'latitude': float(row['latitude']),
+                        'longitude': float(row['longitude']),
+                        'endereco': row['endereco']
+                    }
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Arquivo CSV não encontrado: {csv_file}")
+    except Exception as e:
+        raise Exception(f"Erro ao ler arquivo CSV: {str(e)}")
+    
+    return pontos
