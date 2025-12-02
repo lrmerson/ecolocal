@@ -246,35 +246,6 @@ for ponto in pontos['pontos']:
     print(f"{ponto['nome']}: {ponto['duration_min']:.1f} min de direção")
 ```
 
-### JavaScript (Fetch)
-
-```javascript
-// Listar todos
-fetch('http://localhost:5000/api/coleta-pontos')
-  .then(res => res.json())
-  .then(data => console.log(`Página ${data.page} de ${data.total_pages}`));
-
-// Filtrar por tipo
-const tipos = 'eletroeletronicos,pilhas';
-fetch(`http://localhost:5000/api/coleta-pontos?tipos=${tipos}`)
-  .then(res => res.json())
-  .then(data => console.log(`${data.total} pontos encontrados`));
-
-// Navegar para página 2
-fetch('http://localhost:5000/api/coleta-pontos?page=2')
-  .then(res => res.json())
-  .then(data => console.log(`Mostrando ${data.pontos.length} pontos (página ${data.page} de ${data.total_pages})`))
-
-// Encontrar pontos próximos (requer Google API key)
-fetch('http://localhost:5000/api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=5')
-  .then(res => res.json())
-  .then(data => {
-    data.pontos.forEach(ponto => {
-      console.log(`${ponto.nome}: ${ponto.duration_min.toFixed(1)} min`);
-    });
-  });
-```
-
 ## Integração com Google Routes API v2
 
 ### Configuração Necessária
