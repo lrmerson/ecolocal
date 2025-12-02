@@ -150,7 +150,10 @@ def mapa():
             <div style="position: fixed; top: 10px; right: 60px; z-index:9999;">
                 <a href="/sobre" style="background-color: white; padding: 8px 12px; border-radius: 5px; 
                    text-decoration: none; border: 2px solid rgba(0,0,0,0.2); color: black; 
-                   font-weight: bold; display: block; text-align: center;">ℹ️ Sobre</a>
+                   font-weight: bold; display: block; text-align: center; margin-bottom: 10px;">ℹ️ Sobre</a>
+                <a href="/" style="background-color: white; padding: 8px 12px; border-radius: 5px; 
+                   text-decoration: none; border: 2px solid rgba(0,0,0,0.2); color: black; 
+                   font-weight: bold; display: block; text-align: center;">🏠 Home</a>
             </div>
         '''
         mapa.get_root().html.add_child(folium.Element(sobre_html))
