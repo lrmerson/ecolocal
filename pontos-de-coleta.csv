@@ -1,4 +1,4 @@
-id,nome,tipo_lixo,latitude,longitude,endereco
+﻿id,nome,tipo_lixo,latitude,longitude,endereco
 001,Zero Impacto Logística Reversa,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.762421707078582,-47.935475219000324,Saa Q 2 SETOR DE ABASTECIMENTO E ARMAZENAMENTO NORTE QUADRA 02 LOTE 805
 002,SEMA DF (Secretaria de Estado de Meio Ambiente e Recursos Hídricos do Distrito Federal),"eletroeletronicos\,eletrodomesticos\,pilhas",-15.755712652216836,-47.89334378817608,SEPN CRN 511 Ed. Bittar III - Bloco B
 003,Carrefour Hipermercado,"eletroeletronicos\,eletrodomesticos\,pilhas",-15.733847664170918,-47.899207515917645,Boulevard Shopping ST Setor Terminal Norte Lote J
@@ -117,4 +117,66 @@ id,nome,tipo_lixo,latitude,longitude,endereco
 116,Casas Bahia Recanto das Emas,pilhas,-15.90308569953528,-48.06620246137022,103 Q 103 Conjunto 16 - Recanto das Emas
 117,Casas Bahia Santa Maria,pilhas,-16.00584488857642,-48.00022577116436,Avenida Alagado Cl114 - Santa Maria
 118,Drogasil Samambaia,pilhas,-15.872075024508964,-48.06735898650692,QN 314 Conjunto 1 LT.1 - 1ºANDAR - Samambaia
-119,Drogasil 111 Norte,pilhas,-15.752560363990739,-47.88949015766975,Asa Norte Comércio Local Norte 111 - Centro
+119,Drogaria Pacheco Sudoeste,pilhas,-15.800523911518045,-47.9259736865089,Bloco B - Q Clsw 303 Primeira Avenida S/N Brasília - DF
+120,Dogaria São Paulo/Pacheco Sudoeste,pilhas,-15.79772153304465,-47.92576301534138,Q CLSW 300B BLOCO 4 LJ 5/6/7 E 8 TERREO Brasília - DF
+121,Drogasil Águas Claras,pilhas,-15.828604891783053,-48.01099031349166,Q. 301 Rua A Conjunto 2 - Águas Claras
+122,Drogasil Asa Norte,pilhas,-15.738657794684267,-47.888751728836105,Asa Norte Comércio Local Norte 215 Terreo A Norte - Asa Norte
+123,Drogasil Asa Norte,pilhas,-15.783314122989974,-47.882742236769396,Asa Norte Superquadra Norte 102 - Asa Norte
+124,Drogasil Asa Sul,pilhas,-15.822261708579255,-47.90112674232776,Setor de habitações coletivas sul Comércio Local Sul 408 loja 35 Quadra 102 Bloco C - Asa Sul
+125,Drogasil Asa Sul,pilhas,-15.822705231386566,-47.91342941534446,Setor de habitações coletivas sul Comércio Local Sul 111 6 - Asa Sul
+126,Drogasil Plano Piloto,pilhas,-15.830833193376522,-47.92433002883612,St.Habitações Coletivas Sul, S/N
+127,Drogasil Asa Norte,pilhas,-15.768417873587318,-47.887199355819426,Setor de Habitações Coletivas Norte CL Quadra 307 Bloco C loja 12 - Asa Norte
+128,Drogasil Asa Norte,pilhas,-15.762813192650704,-47.889649826983316,SHC/ NORTE CL Loja 53,63, terreo e loja 66 subsolo - Asa Norte
+129,Drogasil Asa Sul,pilhas,-15.826344845913699,-47.92323227116388,Setor de habitações coletivas sul loja 34 QUADRA 314 - Asa Sul
+130,Drogasil Asa Norte,pilhas,-15.743543899400384,-47.89500178465554,Asa Norte Comércio Local Norte 315 - Asa Norte
+131,Drogasil Águas Claras,pilhas,-15.84050818628798,-48.021354342327776,SUL A CLARAS - Av. das Araucárias, 1605 - Lote 1605 Loja 3 - Terreo
+132,Drogasil Águas Claras,pilhas,-15.835307496576798,-48.017533084655554,RUA DAS PITANGUEIRAS L1 - RUA ALECRIM L2 LOJA 11/12 1, R. Alecrim, 2 - Loja 11 e 12 - terreo
+133,Drogasil Ceilândia,pilhas,-15.814678018331009,-48.10070844232778,St. M QNM 18 - Ceilândia
+134,Drogasil Ceilândia,pilhas,-15.819501038063702,-48.10981225581944,Setor, QNN 1 Lote 03 - Ceilândia
+135,Drogasil Asa Sul,pilhas,-15.817373070834607,-47.916549615344444,SETOR HOSPITALAR LOCAL SUL Quadra 716 5 loja 15 e 16 - Asa Sul
+136,Drogasil Taguatinga,pilhas,-15.83836827725383,-48.053691928836116,St. B Sul Csb 6 Blocos a Ao d Lotes 1/2 Lote 1, 2 Loja 5 - Taguatinga
+137,Drogasil Gama,pilhas,-16.025391750062937,-48.06949614418056,St. Sul Q 1 Residencial Conjunto G - Gama
+138,Drogasil Lago Sul,pilhas,-15.846463377974437,-47.895214613491675,Shis Eqi 5/7 Módulo c, S/N, QI 5 Loja 38 Terreo Sobreloja 37 - lago azul
+139,Drogasil Guará,pilhas,-15.82095095352164,-47.980984886508345,Guará I QE 11 Conj. U - Guará
+140,Drogasil Núcleo Bandeirante,pilhas,-15.868167720170627,-47.96508071534445,AV NB AV CENTRAL 487 e 493 Loja 1 e 2 - Núcleo Bandeirante
+141,Drogasil Guará,pilhas,-15.8335154212241,-47.95495461349167,SMAS Trecho 1 Park shopping Loja 232 - Guará
+142,Drogasil Asa Sul,pilhas,-15.795243449388666,-47.89174998465554,Scs Quadra 7 Bloco a, S/N Quadra 7 Bloco A Loja 1 T Terreo Parte Loja T 51 e T 52 - Asa Sul
+143,Drogasil Planaltina,pilhas,-15.620980879172794,-47.658086999999995,St. Tradicional Setor Tradicional Lote 6 - Planaltina
+144,Drogasil Taguatinga,pilhas,-15.833472955902016,-48.05590979999999,St. Central loja 1 - taguatinga centro
+145,Drogasil Asa Norte,pilhas,-15.75020945383014,-47.89292661349165,Asa Norte CLN 312 BL C Loja 03 Terreo - Asa Norte
+146,Drogasil Taguatinga,pilhas,-15.833493599441981,-48.055866884655536,St. Central loja 1 - taguatinga centro
+147,Drogasil Lago Sul,pilhas,-15.835526631761338,-47.867206628836115,St. de Habitações Individuais Sul QI 11 Loja 46 BLOCO O1 - Lago Sul
+148,Drogasil Asa Sul,pilhas,-15.817455651559001,-47.916678361377805,SETOR HOSPITALAR LOCAL SUL Quadra 716 5 loja 15 e 16 - Asa Sul
+149,Drogasil Samambaia,pilhas,-15.871997626024381,-48.06730534232777,QN 314 Conjunto 1 LT.1 - 1ºANDAR - Samambaia
+150,Drogasil Samambaia,pilhas,-15.86411063450249,-48.07950344418058,QN 208 Lojas 03 e 04 - Samambaia
+151,Drogasil Asa Sul,pilhas,-15.8222926756062,-47.90114819999999,Setor de habitações coletivas sul Comércio Local Sul 408 loja 35 Quadra 102 Bloco C - Asa Sul
+152,Drogasil Sudoeste/Octagonal,pilhas,-15.80323823382956,-47.929161713491666,St. Sudoeste Superquadra Sudoeste 104 - Sudoeste/Octogonal
+153,Drogasil Sudoeste/Octagonal,pilhas,-15.798976776525931,-47.923312644180555,SHC/SW CLSW 302 Bloco B - Loja 6 Térreo
+154,Drogasil Taguatinga,pilhas,-15.822493975801473,-48.06568308465555,St. C Norte CNC 3 loja 1 - Taguatinga
+155,Drogasil Águas Claras,pilhas,-15.840528829108925,-48.021300698147215,SUL A CLARAS - Av. das Araucárias, 1605 - Lote 1605 Loja 3 - Terreo
+156,Drogasil Águas Claras,pilhas,-15.834476109138796,-48.03692451534445,R. 36 Norte, 2 - Águas Claras
+157,Drogasil Asa Norte,pilhas,-15.780482808492911,-47.886194355819434,SCL/N QUADRA 303, SHCN LJ 6 BLOCO E S 68 E 72 - Asa Norte
+158,Drogasil Asa Norte,pilhas,-15.77656845868722,-47.87827646931109,CLN 204 BLOCO C Setor Shcn Loja 2, 3, 4 e 5 Terreo - Asa Norte
+159,Drogasil Asa Norte,pilhas,-15.756283711703672,-47.89170775581943,Asa Norte CLN 311 BL E Terreo, Loja S 02,06,10,12,16,20 E 72 - Asa Norte
+160,Drogasil Asa Norte,pilhas,-15.791889113329814,-47.883290271163894,Bloco O Único, Shopping Center do Conjunto Nacional Brasília - Avenida SDN Lote Unico, 16, Loja T16, Te - Asa Norte
+161,Drogasil Asa Sul,pilhas,-15.81933095025097,-47.89501315581943,SHCS CLS 407 Bloco D - Asa Sul
+162,Drogasil Asa Sul,pilhas,-15.811225396187186,-47.90220918650834,CLS 305 Setor Shcs CL, loja 35 e 37 - Asa Sul
+163,Drogasil Asa Sul,pilhas,-15.814799545625355,-47.88911544047498,Asa Sul EQS 404/405 - Asa Sul
+164,Drogasil Asa Sul,pilhas,-15.814744777423046,-47.90741528650834,Asa Sul CLS 309 Loja 37 Loja 37 - Asa Sul
+165,Drogasil Asa Sul,pilhas,-15.817414361201028,-47.91669981905003,SETOR HOSPITALAR LOCAL SUL Quadra 716 5 loja 15 e 16 - Asa Sul
+166,Drogasil Ceilândia,pilhas,-15.812973717479483,-48.11176784418055,Qnm Setor M Qnm 4 Conjunto B 26 4 Conjunto B, Lote - Ceilândia
+167,Drogasil Plano Piloto,pilhas,-15.793612071603642,-47.917581798147204,St. Sudoeste Comércio Local Sudoeste 300 B e 66, Condomínio do Ed Paladium Center Lojas 10, 14, 16 - Plano Piloto
+168,Drogasil Gama,pilhas,-16.010132108136897,-48.05394128650834,QUADRA 7, Sce St. Leste Industrial, 660 - Gama Leste
+169,Drogasil Guará,pilhas,-15.828825925941938,-47.9747459711639,Guará II QE 15 - Guará
+170,Drogasil Guará,pilhas,-15.84145889420956,-47.97278554232777,Guará II QE 34 Conjuntos S Conjunto, Casa 19 e Casa 21 - Guará
+171,Drogasil Lago Norte,pilhas,-15.696009066066289,-47.87350018465555,ST HAB TAQUARI LAGO NORTE Q. 3 Conj. 1
+172,Drogasil Lago Sul,pilhas,-15.869650122068883,-47.91823145581944,Setor de Habitações de Habitações Individuais Sul Aeroporto Internacional de Brasília - Presidente Juscelino Kubitschek Loja V 1 - Lago Sul
+173,Drogasil Núcleo Bandeirante,pilhas,-15.868198680156356,-47.964994884655546,AV NB AV CENTRAL 487 e 493 Loja 1 e 2 - Núcleo Bandeirante
+175,Drogasil Riacho Fundo,-15.882111610832352,-48.017706999999994,Riacho Fundo QN 5 1º andar, Lojas 01 e 02 - Riacho Fundo
+176,Drogasil Plano Piloto,pilhas,-15.79325125221197,-47.882471557672226,Plataforma Rodoviária Mezanino, S/N, Loja 11 e 12 - Rodoviária
+177,Drogasil Lago Norte,pilhas,-15.721418985809372,-47.88310541534446,Lago Norte SHIGS 712 74H8+8Q4 Bl A LJ 28/29/30 - Lago Norte
+178,Drogasil Sobradinho,pilhas,-15.648013725737645,-47.80096621534446,Q 6 Lote 08 - Sobradinho
+179,Drogasil Sobradinho II,pilhas,-15.670574229558644,-47.84436857301667,SH Grande Colorado Condomínio Solar de Atenas Condomínio Solar de Athenas LT 12/13 - Sobradinho II
+180,Drogasil Taguatinga,pilhas,-15.808472800961106,-48.080083026983324,St. Qi QI 19 - Taguatinga
+181,Drogasil Taguatinga,pilhas,-15.805248335879828,-48.062446557672224,St. D Norte QND 38 T Norte - Taguatinga
+182,Drogasil 111 Norte,pilhas,-15.752560363990739,-47.88949015766975,Asa Norte Comércio Local Norte 111 - Centro
