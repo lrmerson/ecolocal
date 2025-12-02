@@ -211,7 +211,7 @@ GET /api/coleta-pontos [?tipos=...] [?page=...] [?lat=...] [?lon=...] [?n=...]
     └─ [Google Distance Matrix API]
          ↓
     [pontos-de-coleta.csv]
-    - Dados (119 pontos)
+    - Dados (246 pontos)
     - Leituras por query
          ↓
     Resposta JSON com pontos
@@ -325,7 +325,7 @@ projeto-apc/
 ├── ARCHITECTURE.md            # ★ Design & decisões
 ├── CHANGELOG.md               # ★ Resumo de mudanças
 ├── SUMMARY.md                 # ★ Este arquivo
-├── pontos-de-coleta.csv       # Dados (119 pontos)
+├── pontos-de-coleta.csv       # Dados (246 pontos)
 ├── #Filtro de pontos.py       # Legacy (original)
 └── Untitled-1.py              # Existente
 ```

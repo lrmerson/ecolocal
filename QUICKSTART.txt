@@ -135,7 +135,7 @@
   ├── CHANGELOG.md                ← 📝 Histórico de mudanças
   ├── SUMMARY.md                  ← 📋 Sumário final
   │
-  ├── pontos-de-coleta.csv        ← 📊 Dados (119 pontos)
+  ├── pontos-de-coleta.csv        ← 📊 Dados (246 pontos)
   ├── requirements.txt            ← 📦 Dependências
   └── #Filtro de pontos.py        ← 📁 Original (legado)
 

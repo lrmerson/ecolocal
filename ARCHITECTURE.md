@@ -18,7 +18,7 @@ projeto-apc/
 │
 ├── test_manual.py                  # Script de teste interativo
 │
-├── pontos-de-coleta.csv            # Dados (119 pontos de coleta)
+├── pontos-de-coleta.csv            # Dados (246 pontos de coleta)
 │
 ├── requirements.txt                # Dependências Python
 │

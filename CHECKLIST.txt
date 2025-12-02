@@ -199,7 +199,7 @@ TESTES
 DADOS
 =====
 
-[✓] CSV com 119 pontos de coleta
+[✓] CSV com 246 pontos de coleta
     - Coluna "id" adicionada (001-119)
     - Tipos de lixo com \, como separador
     - Coordenadas geográficas válidas
