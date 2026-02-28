@@ -94,7 +94,7 @@ def get_distances_from_mapbox(origin_lat, origin_lon, destinations):
                 if dur_s is not None and dist_m is not None:
                     results.append({
                         "distance_km": dist_m / 1000,
-                        "duration_min": dur_s / 60
+                        "duration_min": round(dur_s / 60)
                     })
                     print(f"  ✅ Destino {batch_start + i}: {dist_m/1000:.2f} km, {dur_s/60:.1f} min")
                 else:
