@@ -1,18 +1,19 @@
 # Resumo das Alterações - REST API Implementation
 
-## Versão 1.1 - Google Routes API v2 Integration
+## Versão 1.2 - Mapbox Matrix API Integration
 
 ### Novas Funcionalidades
 
-1. **Integração com Google Routes API v2**
+1. **Integração com Mapbox Matrix API**
    - Cálculo de distância e tempo de direção em tempo real
-   - Função `get_distances_from_google()` para chamar Google API
+   - Função `get_distances_from_mapbox()` substituindo Google API
    - Função `enriquecer_pontos_com_distancias()` para orquestração
+   - Todos os destinos enviados em uma única requisição (lotes de 24), eliminando requisições individuais
 
 2. **Filtro por Proximidade**
-   - Novos parâmetros: `lat`, `lon`, `n`
+   - Parâmetros: `lat`, `lon`, `n`
    - Retorna N pontos mais próximos com tempo de direção mínimo
-   - Processa destinos individualmente com endpoint computeRouteMatrix
+   - Performance drasticamente melhorada: 1 requisição para N destinos (vs N requisições antes)
 
 3. **Novos Campos de Resposta**
    - `distance_km`: Distância em quilômetros
@@ -20,20 +21,18 @@
 
 ### Arquivos Modificados
 
-- `coleta_service.py`: Adicionadas funções Google API
-- `app.py`: Atualizado para aceitar lat/lon/n
-- `README.md`: Documentação de proximidade
-- `ARCHITECTURE.md`: Fluxo com Google API
-- `requirements.txt`: Adicionado requests==2.31.0
-- `QUICKSTART.txt`: Exemplos com proximidade
-- `CHANGELOG.md`: Este arquivo
-- `CHECKLIST.txt`: Google API requirements
+- `coleta_service.py`: Google API substituída por Mapbox Matrix API
+- `README.md`: Documentação atualizada
+- `ARCHITECTURE.md`: Fluxo com Mapbox API
+- `CHECKLIST.txt`: Referências atualizadas
 - `SUMMARY.md`: Estatísticas atualizadas
+- `MAP_INTEGRATION.md`: Instruções de configuração atualizadas
+- `templates/sobre.html`: Stack técnica atualizada
 
 ### Requisitos
 
-- Google Cloud account com Routes API habilitada
-- API key do Google
+- Conta gratuita no Mapbox (account.mapbox.com)
+- Token de acesso Mapbox (variável de ambiente `MAPBOX_API_KEY`)
 - Pacote requests instalado
 
 ---

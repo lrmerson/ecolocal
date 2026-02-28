@@ -1,7 +1,6 @@
 import csv
 import requests
 import os
-import json
 import socket
 
 # Forçar uso de IPv4 apenas para resolver problemas de lentidão no Windows
@@ -11,123 +10,101 @@ def getaddrinfo_ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
 socket.getaddrinfo = getaddrinfo_ipv4_only
 
 # Tentar obter a chave de variável de ambiente, senão usar placeholder
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "YOUR_GOOGLE_API_KEY")
+MAPBOX_API_KEY = os.getenv("MAPBOX_API_KEY", "YOUR_MAPBOX_API_KEY")
 
 # Avisar se a chave não foi configurada
-if GOOGLE_API_KEY == "YOUR_GOOGLE_API_KEY":
-    print("\n⚠️  AVISO: Chave de API do Google não configurada!")
-    print("   Configure a variável de ambiente GOOGLE_API_KEY com sua chave real.")
+if MAPBOX_API_KEY == "YOUR_MAPBOX_API_KEY":
+    print("\n⚠️  AVISO: Chave de API do Mapbox não configurada!")
+    print("   Configure a variável de ambiente MAPBOX_API_KEY com seu token Mapbox.")
     print("   Sem a chave, a função de proximidade não funcionará.\n")
 
 
-def get_distances_from_google(origin_lat, origin_lon, destinations):
+# Mapbox Matrix API: max 25 coordinates total per request (1 origin + 24 destinations)
+_MAPBOX_BATCH_SIZE = 24
+
+
+def get_distances_from_mapbox(origin_lat, origin_lon, destinations):
     """
-    Chama a Google Routes API v2 (Distance Matrix endpoint) para obter distância e tempo de direção.
-    
+    Chama a Mapbox Matrix API para obter distância e tempo de direção de uma origem
+    para múltiplos destinos em uma única requisição (ou em lotes de 24 destinos).
+
     Args:
         origin_lat: Latitude do usuário
         origin_lon: Longitude do usuário
         destinations: Lista de tuplas (lat, lon)
-    
+
     Retorna:
-        Lista de dicionários com distance_km e duration_min
+        Lista de dicionários com distance_km e duration_min (mesma ordem de destinations)
     """
     if not destinations:
         return []
-    
+
     # Verificar se a chave de API foi configurada
-    if GOOGLE_API_KEY == "YOUR_GOOGLE_API_KEY":
-        print("❌ Erro: Chave de API do Google não configurada!")
+    if MAPBOX_API_KEY == "YOUR_MAPBOX_API_KEY":
+        print("❌ Erro: Chave de API do Mapbox não configurada!")
         return [{"distance_km": None, "duration_min": None}] * len(destinations)
-    
-    url = "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix"
-    headers = {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": GOOGLE_API_KEY,
-        "X-Goog-FieldMask": "originIndex,destinationIndex,distanceMeters,duration"
-    }
 
     results = []
-    
-    # Processar cada destino individualmente
-    for dest_lat, dest_lon in destinations:
 
-        payload = {
-            "origins": [
-                {
-                    "waypoint": {
-                        "location": {
-                            "latLng": {
-                                "latitude": origin_lat,
-                                "longitude": origin_lon
-                            }
-                        }
-                    }
-                }
-            ],
-            "destinations": [
-                {
-                    "waypoint": {
-                        "location": {
-                            "latLng": {
-                                "latitude": dest_lat,
-                                "longitude": dest_lon
-                            }
-                        }
-                    }
-                }
-            ],
-            "travelMode": "DRIVE"
-        }
-        
-        print(f"Debug - Payload enviado:")
-        print(f"  Origin: lat={origin_lat}, lon={origin_lon}")
-        print(f"  Destination: lat={dest_lat}, lon={dest_lon}")
-        print(f"  Payload completo: {json.dumps(payload, indent=2)}")
+    # Processar em lotes de _MAPBOX_BATCH_SIZE destinos por requisição
+    for batch_start in range(0, len(destinations), _MAPBOX_BATCH_SIZE):
+        batch = destinations[batch_start: batch_start + _MAPBOX_BATCH_SIZE]
+
+        # Montar string de coordenadas: origem primeiro (lon,lat), depois destinos
+        # A API Mapbox usa a ordem longitude,latitude
+        coords_parts = [f"{origin_lon},{origin_lat}"]
+        coords_parts += [f"{dest_lon},{dest_lat}" for dest_lat, dest_lon in batch]
+        coordinates_str = ";".join(coords_parts)
+
+        # Índices dos destinos (1 até len(batch))
+        destination_indices = ";".join(str(i) for i in range(1, len(batch) + 1))
+
+        url = (
+            f"https://api.mapbox.com/directions-matrix/v1/mapbox/driving/{coordinates_str}"
+            f"?sources=0"
+            f"&destinations={destination_indices}"
+            f"&annotations=duration,distance"
+            f"&access_token={MAPBOX_API_KEY}"
+        )
+
+        print(f"Debug - Chamando Mapbox Matrix API para lote de {len(batch)} destinos "
+              f"(índices {batch_start}–{batch_start + len(batch) - 1})")
 
         try:
-            resposta = requests.post(
-                url, 
-                headers=headers, 
-                data=json.dumps(payload), 
+            resposta = requests.get(
+                url,
                 timeout=10,
-                proxies={'http': None, 'https': None}  # Desabilita detecção automática de proxy
+                proxies={"http": None, "https": None}  # Desabilita detecção automática de proxy
             ).json()
-            print(f"Debug - Resposta API para destino ({dest_lat}, {dest_lon}): {resposta}")
-            
-            # A resposta é uma lista de elementos no formato:
-            # [{'originIndex': 0, 'destinationIndex': 0, 'distanceMeters': 21443, 'duration': '1708s'}]
-            if resposta and isinstance(resposta, list) and len(resposta) > 0:
-                elemento = resposta[0]
-                
-                # Distância em metros
-                dist_m = elemento.get("distanceMeters", 0)
-                
-                # Duração em segundos (formato "1234s")
-                dur_s = elemento.get("duration", "0s")
-                # Converter string de duração (ex: "1708s") para segundos
-                dur_seconds = float(dur_s.rstrip('s')) if isinstance(dur_s, str) else dur_s
-                
-                results.append({
-                    "distance_km": dist_m / 1000,
-                    "duration_min": dur_seconds / 60
-                })
-                print(f"✅ Sucesso: {dist_m/1000:.2f} km, {dur_seconds/60:.1f} min")
-            else:
-                # Se não houver resultado válido, retornar None
-                print(f"⚠️  Aviso: resposta vazia ou inválida da API para destino ({dest_lat}, {dest_lon})")
-                results.append({
-                    "distance_km": None,
-                    "duration_min": None
-                })
-        
+
+            if resposta.get("code") != "Ok":
+                print(f"⚠️  Aviso: Mapbox retornou código inesperado: {resposta.get('code')}")
+                results += [{"distance_km": None, "duration_min": None}] * len(batch)
+                continue
+
+            # durations e distances são matrizes [sources][destinations]
+            # Como temos 1 source, pegamos a primeira (e única) linha
+            durations_row = resposta.get("durations", [[]])[0]   # segundos
+            distances_row = resposta.get("distances", [[]])[0]   # metros
+
+            for i in range(len(batch)):
+                dur_s = durations_row[i] if i < len(durations_row) else None
+                dist_m = distances_row[i] if i < len(distances_row) else None
+
+                if dur_s is not None and dist_m is not None:
+                    results.append({
+                        "distance_km": dist_m / 1000,
+                        "duration_min": dur_s / 60
+                    })
+                    print(f"  ✅ Destino {batch_start + i}: {dist_m/1000:.2f} km, {dur_s/60:.1f} min")
+                else:
+                    print(f"  ⚠️  Destino {batch_start + i}: sem dados de rota")
+                    results.append({"distance_km": None, "duration_min": None})
+
         except Exception as e:
-            print(f"❌ Erro ao chamar API Google Routes: {str(e)}")
-            results.append({
-                "distance_km": None,
-                "duration_min": None
-            })
-    
+            print(f"❌ Erro ao chamar Mapbox Matrix API: {str(e)}")
+            results += [{"distance_km": None, "duration_min": None}] * len(batch)
+
     return results
 
 
@@ -135,32 +112,35 @@ def get_distances_from_google(origin_lat, origin_lon, destinations):
 
 def enriquecer_pontos_com_distancias(pontos, user_lat, user_lon):
     """
-    Adiciona distance_km e duration_min a cada ponto usando Google Routes API v2.
-    
+    Adiciona distance_km e duration_min a cada ponto usando a Mapbox Matrix API.
+
+    Todos os destinos filtrados são enviados de uma vez (em lotes de 24 se necessário),
+    eliminando a necessidade de uma requisição por destino.
+
     Args:
         pontos: Dicionário de pontos {id: {latitude, longitude, ...}}
         user_lat: Latitude do usuário
         user_lon: Longitude do usuário
-    
+
     Retorna:
         Dicionário pontos atualizado com distance_km e duration_min adicionados
     """
     if not pontos or not user_lat or not user_lon:
         return pontos
-    
-    # Extrair destinos como lista de tuplas (lat, lon)
+
+    # Extrair destinos como lista de tuplas (lat, lon), preservando a ordem
     destinations = [(ponto['latitude'], ponto['longitude']) for ponto in pontos.values()]
-    
-    # Obter distâncias da API Google Routes v2
-    print(f"Chamando Google Routes API v2 para {len(destinations)} pontos...")
-    results = get_distances_from_google(user_lat, user_lon, destinations)
-    
+
+    # Obter distâncias via Mapbox Matrix API (em lotes de até 24 destinos)
+    print(f"Chamando Mapbox Matrix API para {len(destinations)} pontos...")
+    results = get_distances_from_mapbox(user_lat, user_lon, destinations)
+
     # Adicionar distância e duração a cada ponto
     ponto_list = list(pontos.items())
     for (id_ponto, ponto), result in zip(ponto_list, results):
         ponto['distance_km'] = result['distance_km']
         ponto['duration_min'] = result['duration_min']
-    
+
     return pontos
 
 

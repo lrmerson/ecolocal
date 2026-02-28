@@ -20,14 +20,14 @@ A aplicação estará disponível em `http://localhost:5000`
 
 ## Arquitetura e Fluxo da Aplicação
 
-![Diagrama de Fluxo](docs/fluxo-aplicacao.png)
+![Diagrama de Fluxo](docs/fluxo-atualizado.jpg)
 
 O diagrama acima ilustra o fluxo completo da aplicação:
 
 1. **Usuário** acessa a página inicial e interage via navegador
 2. **Frontend** (Flask/HTML) processa a solicitação via HTTP
 3. **Backend** (Python) filtra pontos do CSV e cria dicionário
-4. **Google Routes API v2** calcula distâncias e durações de rotas
+4. **Mapbox Matrix API** calcula distâncias e durações de rotas
 5. **Resposta** enriquecida com informações de distância/duração
 6. **Mapa interativo** exibido ao usuário com pontos mais próximos
 
@@ -65,7 +65,7 @@ curl "http://localhost:5000/api/coleta-pontos?page=2"
 # Filtrar e ir para página 3
 curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&page=3"
 
-# Encontrar 3 pontos mais próximos (via Google Routes API v2)
+# Encontrar 3 pontos mais próximos (via Mapbox Matrix API)
 curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=3"
 
 # Encontrar 5 pontos mais próximos de qualquer tipo
@@ -124,7 +124,7 @@ Com filtro por tipo:
 }
 ```
 
-Com filtro por proximidade (Google Routes API v2):
+Com filtro por proximidade (Mapbox Matrix API):
 ```json
 {
   "total": 3,
@@ -246,19 +246,23 @@ for ponto in pontos['pontos']:
     print(f"{ponto['nome']}: {ponto['duration_min']:.1f} min de direção")
 ```
 
-## Integração com Google Routes API v2
+## Integração com Mapbox Matrix API
 
 ### Configuração Necessária
 
-1. Obtenha uma chave de API do Google:
-   - Acesse [Google Cloud Console](https://console.cloud.google.com/)
-   - Crie um novo projeto
-   - Ative a API "Routes API"
-   - Crie uma chave de API
+1. Obtenha um token de acesso do Mapbox:
+   - Acesse [account.mapbox.com](https://account.mapbox.com/)
+   - Crie uma conta gratuita (ou faça login)
+   - Copie o token público padrão (ou crie um novo)
+   - A Matrix API está incluída no plano gratuito
 
-2. Configure a chave como variável de ambiente:
+2. Configure o token como variável de ambiente:
    ```bash
-   export GOOGLE_API_KEY="sua_chave_api_aqui"
+   export MAPBOX_API_KEY="seu_token_mapbox_aqui"
+   ```
+   No Windows (PowerShell):
+   ```powershell
+   $env:MAPBOX_API_KEY = "seu_token_mapbox_aqui"
    ```
 
 3. Instale dependências:
@@ -268,11 +272,12 @@ for ponto in pontos['pontos']:
 
 ### Como Funciona
 
-- Quando `lat` e `lon` são fornecidos, a API chama Google Routes API v2 (computeRouteMatrix) para calcular:
+- Quando `lat` e `lon` são fornecidos, a API chama a Mapbox Matrix API (`/directions-matrix/v1/mapbox/driving`) para calcular:
   - `distance_km`: Distância em quilômetros via dirigindo
   - `duration_min`: Tempo de direção em minutos
-- O parâmetro `n` retorna apenas os N pontos com menor `duration_min` (tempo de direção)
-- Usa endpoint de Distance Matrix da Routes API v2 com configuração IPv4-only para melhor performance
+- Todos os destinos filtrados são enviados em uma única requisição (em lotes de até 24 destinos), eliminando a necessidade de uma requisição por destino (como no Google Routes API)
+- O parâmetro `n` retorna apenas os N pontos com menor `duration_min` (tempo de direção calculado a partir da localização do usuário)
+- Usa configuração IPv4-only para melhor performance no Windows
 
 ## Notas
 
@@ -281,4 +286,4 @@ for ponto in pontos['pontos']:
 - O filtro é case-insensitive
 - O filtro usa lógica AND: retorna apenas pontos que têm TODOS os tipos especificados
 - Proximidade é calculada por tempo de direção (não distância em linha reta)
-- Requer API key válida do Google para funcionalidade de proximidade
+- Requer token Mapbox válido (variável de ambiente `MAPBOX_API_KEY`) para funcionalidade de proximidade

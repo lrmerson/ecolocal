@@ -9,10 +9,10 @@ REQUISITOS FUNCIONAIS
     - 1 endpoint REST consolidado
     - Framework: Flask
 
-[✓] Integração com Google Routes API v2
-    - Função get_distances_from_google() implementada
+[✓] Integração com Mapbox Matrix API
+    - Função get_distances_from_mapbox() implementada
     - Função enriquecer_pontos_com_distancias() para orquestração
-    - Processamento individual com computeRouteMatrix
+    - Todos os destinos enviados em uma única requisição (lotes de 24)
     - Parâmetros lat/lon/n suportados
     - Campos distance_km e duration_min retornados
 
@@ -55,7 +55,7 @@ ENDPOINTS REST
     - Página padrão: 1, com 10 resultados por página
     - Retorna JSON com metadados
     - Status: 200 (ok), 500 (erro)
-    - Suporta filtro de proximidade via Google API
+    - Suporta filtro de proximidade via Mapbox Matrix API
 ARQUIVOS CRIADOS
 ================
 
@@ -93,7 +93,7 @@ ARQUIVOS CRIADOS
     - Dependências Python
     - Flask 3.0.0
     - Werkzeug 3.0.1
-    - requests 2.31.0 (para Google API)
+    - requests 2.31.0 (para Mapbox Matrix API)
 
 [✓] README.md
     - Guia completo
@@ -235,9 +235,9 @@ FUNCIONALIDADES EXTRAS
     - Menu de opções
 
 [✓] Filtro de Proximidade
-    - Google Routes API v2
+    - Mapbox Matrix API
     - Cálculo de tempo de direção
-    - Processamento individual de pontos
+    - Todos os destinos em uma única requisição (lotes de 24)
     - Ordenação por proximidade
 
 
@@ -261,7 +261,7 @@ COMPATIBILIDADE
 [✓] Flask 3.0.0+
 [✓] Módulo CSV (built-in)
 [✓] Módulo JSON (built-in)
-[✓] Google Routes API v2
+[✓] Mapbox Matrix API
 [✓] requests 2.31.0+
 
 
@@ -292,8 +292,8 @@ PRÓXIMOS PASSOS RECOMENDADOS
 =============================
 
 Curto Prazo:
-  [ ] Obter Google API key
-  [ ] Configurar API key em coleta_service.py
+  [ ] Obter token Mapbox (gratuito em account.mapbox.com)
+  [ ] Configurar variável de ambiente MAPBOX_API_KEY
   [ ] Instalar dependências: pip install -r requirements.txt
   [ ] Rodar testes: python -m unittest test_coleta_service.py -v
   [ ] Iniciar servidor: python app.py
@@ -329,11 +329,11 @@ NOTAS
 
 - Estrutura modular facilita manutenção e evolução
 
-- Google Routes API v2 processa destinos individualmente com configuração IPv4-only para melhor performance
+- Mapbox Matrix API processa todos os destinos em uma única requisição (lotes de 24) com configuração IPv4-only para melhor performance
 
 - Proximidade é calculada por tempo de direção, não distância em linha reta
 
-- API key do Google deve ser configurada antes de usar filtro de proximidade
+- Token MAPBOX_API_KEY deve ser configurado como variável de ambiente antes de usar filtro de proximidade
 
 - Campos distance_km e duration_min apenas aparecem quando lat/lon fornecidos
 

@@ -8,7 +8,7 @@ A integração do mapa interativo com Folium foi **completamente implementada** 
 - ✅ Mapa interativo com marcadores coloridos
 - ✅ Filtros por tipo de lixo
 - ✅ Suporte a localização do usuário
-- ✅ Integração com proximidade (Google Distance Matrix)
+- ✅ Integração com proximidade (Mapbox Matrix API)
 - ✅ Página "Sobre" com informações do projeto
 - ✅ API REST preservada
 
@@ -69,7 +69,7 @@ python app.py
 - Filtro por query parameters
 - Controle de localização do usuário
 - Popups com informações detalhadas
-- Integração com Google Maps
+- Integração com Mapbox Matrix API
 
 ### 3️⃣ Página Sobre (`/sobre`)
 - Design profissional
@@ -169,7 +169,7 @@ Usuario Acessa: /mapa?tipos=pilhas&lat=-23.5505&lon=-46.6333&n=3
                     ↓
         coleta_service.ler_pontos_por_tipo_lixo()
                     ↓
-        Google Distance Matrix API (se configurada)
+        Mapbox Matrix API (se configurada)
                     ↓
         Pontos filtrados com distance_km e duration_min
                     ↓
@@ -232,7 +232,7 @@ pip install folium==0.14.0
 - Verifique se o CSV tem as colunas: `latitude`, `longitude`, `nome`, `tipo_lixo`, `endereco`
 
 ### "Proximidade não funciona"
-- Confirme que configurou a API key do Google em `coleta_service.py`
+- Confirme que a variável de ambiente `MAPBOX_API_KEY` está configurada
 - Execute testes: `python -m unittest test_coleta_service.py -v`
 
 ---
@@ -297,7 +297,7 @@ Você tem agora:
 - ✅ Página inicial atraente
 - ✅ Documentação clara
 - ✅ API REST totalmente integrada
-- ✅ Suporte a proximidade com Google Maps
+- ✅ Suporte a proximidade com Mapbox Matrix API
 - ✅ Design responsivo
 - ✅ Performance otimizada
 

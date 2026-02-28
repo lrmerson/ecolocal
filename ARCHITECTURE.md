@@ -46,7 +46,7 @@ Cliente HTTP
     ↓
 [Se lat/lon fornecidos: Chamar enriquecer_pontos_com_distancias()]
     ↓
-[Google Routes API v2 - computeRouteMatrix]
+[Mapbox Matrix API - directions-matrix]
     ↓
 [Adicionar distance_km e duration_min]
     ↓
@@ -154,24 +154,24 @@ curl "http://localhost:5000/api/coleta-pontos?tipos=pilhas&page=2"
 - Sem queries desnecessárias
 - Possibilidade de paginação
 
-## Integração com Google Routes API v2
+## Integração com Mapbox Matrix API
 
 ### Implementado
 
-- ✓ Função `get_distances_from_google()` para chamar API (computeRouteMatrix)
+- ✓ Função `get_distances_from_mapbox()` para chamar API (`/directions-matrix/v1/mapbox/driving`)
 - ✓ Função `enriquecer_pontos_com_distancias()` para orquestração
+- ✓ Todos os destinos em uma única requisição GET (lotes de 24 para respeitar limite da API)
 - ✓ Configuração IPv4-only para resolver problemas de timeout no Windows
 - ✓ Tratamento de erros com fallback
 - ✓ Campos `distance_km` e `duration_min` nas respostas
 - ✓ Ordenação por tempo de direção para encontrar pontos próximos
-- ✓ Headers necessários (X-Goog-Api-Key, X-Goog-FieldMask)
 
 ### Requisitos
 
-- Chave de API do Google (Routes API habilitada)
+- Token de acesso Mapbox (plano gratuito inclui Matrix API)
 - Pacote `requests` instalado
 - Coordenadas de latitude/longitude válidas do usuário
-- Variável de ambiente GOOGLE_API_KEY configurada
+- Variável de ambiente `MAPBOX_API_KEY` configurada
 
 ## Próximas Melhorias Possíveis
 

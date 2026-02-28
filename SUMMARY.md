@@ -8,10 +8,10 @@
 
 1. **`coleta_service.py`** - Lógica de negócio
    - Função `ler_pontos_por_tipo_lixo()` refatorada
-   - Função `get_distances_from_google()` para Google API
+   - Função `get_distances_from_mapbox()` para Mapbox Matrix API
    - Função `enriquecer_pontos_com_distancias()` para orquestração
    - Função `pontos_mais_proximos()` para filtrar N mais próximos
-   - Integração com Google Routes API v2
+   - Integração com Mapbox Matrix API (todos os destinos em uma única requisição)
    - Independente de HTTP
    - Tratamento robusto de erros
    - Docstrings completas em Português
@@ -84,7 +84,7 @@
 - Framework: Flask
 - Padrão REST: Resource-based URIs, HTTP methods, status codes
 - Formato: JSON
-- Suporta filtro de proximidade via Google Routes API v2
+- Suporta filtro de proximidade via Mapbox Matrix API
 - Parâmetros: tipos, page, lat, lon, n
 
 ### ✅ Boas Práticas REST API Design
@@ -123,8 +123,8 @@
 | Linhas de testes | 150+ |
 | Exemplos de uso | 9 |
 | Documentação (linhas) | 600+ |
-| Funções Google API | 3 |
-| Integração Google Routes API v2 | Sim ✓ |
+| Funções Mapbox API | 3 |
+| Integração Mapbox Matrix API | Sim ✓ |
 
 ---
 
@@ -200,15 +200,15 @@ GET /api/coleta-pontos [?tipos=...] [?page=...] [?lat=...] [?lon=...] [?n=...]
     [coleta_service.py]
     - Lógica de filtro
     - Leitura CSV
-    - Se lat/lon: Chamar Google API
+    - Se lat/lon: Chamar Mapbox Matrix API
     - Se n: Filtrar N mais próximos
     - Sem dependências HTTP
     - Testável
          ↓
     Se lat/lon fornecidos:
     ├─ [enriquecer_pontos_com_distancias()]
-    ├─ [get_distances_from_google()]
-    └─ [Google Routes API v2]
+    ├─ [get_distances_from_mapbox()]
+    └─ [Mapbox Matrix API]
          ↓
     [pontos-de-coleta.csv]
     - Dados (246 pontos)

@@ -171,9 +171,12 @@ pip install folium
 **Solução:** Verifique se o arquivo CSV está bem formatado e contém colunas `latitude` e `longitude`
 
 ### Proximidade não funciona
-**Solução:** Configure a API key do Google em `coleta_service.py`
-```python
-GOOGLE_API_KEY = "sua_chave_aqui"
+**Solução:** Configure o token do Mapbox como variável de ambiente antes de iniciar o servidor:
+```powershell
+$env:MAPBOX_API_KEY = "seu_token_mapbox_aqui"
+```
+```bash
+export MAPBOX_API_KEY="seu_token_mapbox_aqui"
 ```
 
 ---
